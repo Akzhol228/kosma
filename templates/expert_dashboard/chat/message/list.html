@@ -1,0 +1,17 @@
+{% extends 'expert_dashboard/base.html' %}
+{% load chat_tags %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-3">
+			<div class="card card-bordered">
+				{{ demand.comment }} <br>
+				ID: {{ demand.id }} <br>
+				Дата: {{ demand.deadline }} <br>
+			</div>
+		</div>
+		<div class="col-md-9">
+            {% include 'chat/message/list.html' %}
+		</div>
+	</div>
+{% endblock %}

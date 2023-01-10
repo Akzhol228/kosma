@@ -1,0 +1,5 @@
+<div class="media media-chat {% if request.user == message.from_user %} d-flex {% else %} media-chat-reverse {% endif %}">
+  <div class="media-body">
+    <p>{{ message.text }}</p>
+  </div>
+</div>

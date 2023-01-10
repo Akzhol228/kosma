@@ -1,0 +1,29 @@
+{% load static %}
+
+<div class="card card-bordered">
+	  <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+		<!--<div class="media media-meta-day">Сегодня</div>-->
+		{% for message in messages %}
+		  {% include 'chat/message/detail.html' %}
+		{% endfor %}
+		<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+			<div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+		</div>
+		<div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+			<div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+		</div>
+	  </div>
+
+	  <div class="publisher bt-1 border-light">
+		<img class="avatar avatar-xs" src="{% static 'assets/images/administrator-male.png' %}" alt="...">
+		<input id="chat-message-input" class="publisher-input" type="text" placeholder="Напиши что-нибудь">
+		<span class="publisher-btn file-group">
+		  <i class="fa fa-paperclip file-browser"></i>
+		  <input type="file">
+		</span>
+		{{ room_split_0|json_script:"room-split-1-id" }}
+		{{ room_split_1|json_script:"room-split-2-id" }}
+		{{ request.user.username|json_script:"request-user" }}
+		<a id="chat-message-submit" class="publisher-btn text-info" href="#" data-abc="true"><i class="fa fa-paper-plane"></i></a>
+	  </div>
+</div>

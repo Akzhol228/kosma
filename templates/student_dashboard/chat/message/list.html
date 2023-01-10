@@ -1,0 +1,27 @@
+{% extends 'student_dashboard/base.html' %}
+{% load chat_tags %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-3">
+			<div class="card card-bordered">
+				{% for demand_distribution in demand.demanddistribution_set.all %}
+					{% get_merge_url demand.id demand_distribution.id as room %}
+					{% get_count_unread_message request.user demand_distribution.id as unread_message %}
+					<p>
+						<a href="{% url 'student_dashboard:message_list' room=room %}">{{ demand_distribution.expert }}</a>
+						<span id="notification-chat-{{ demand_distribution.id }}">{{ unread_message }}</span>
+					</p>
+				{% endfor %}
+
+				------------------------------------------- <br>
+				{{ demand.comment }} <br>
+				ID: {{ demand.id }} <br>
+				Дата: {{ demand.deadline }} <br>
+			</div>
+		</div>
+		<div class="col-md-9">
+            {% include 'chat/message/list.html' %}
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+
+<form class="row g-4" action="{{ request.path }}" method="POST">
+	{% csrf_token %}
+	<div class="col-md-12">
+        {{ form.rating }}
+	</div>
+	<div class="col-md-12">
+		{{ form.text }}
+	</div>
+	<div class="d-sm-flex justify-content-end">
+		<button type="submit" class="btn btn-primary mb-0">Отправить</button>
+	</div>
+</form>

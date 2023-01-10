@@ -1,0 +1,30 @@
+{% load crispy_forms_tags %}
+<form class="row g-4" action="" method="POST">
+	{% csrf_token %}
+	<div class="col-md-6">
+		ТИП ЗАДАНИЕ:<br>
+        {{demand_distribution.demand.type_task}}
+	</div>
+	<div class="col-md-6">
+        ПРЕДМЕТ:<br>
+        {{demand_distribution.demand.subject}}
+	</div>
+	<div class="col-md-12">
+        ДЕДЛАЙН:<br>
+        {{demand_distribution.demand.deadline}}
+	</div>
+	<div class="col-md-6">
+        ЭКСПЕРТ:<br>
+        {{demand_distribution.expert}}
+	</div>
+	<div class="col-md-6">
+        СТОИМОСТЬ:<br>
+        {{demand_distribution.price}}
+	</div>
+	<div class="col-md-12">
+		КОММЕНТАРИЙ СТУДЕНТОВ<br>
+		{% for comment in demand_distribution.expert.comment_expert.all %}
+			{{ comment.text }} <br>
+		{% endfor %}
+	</div>
+</form>

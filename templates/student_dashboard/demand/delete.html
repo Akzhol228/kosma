@@ -1,0 +1,11 @@
+<form class="modal-content" action="{{ request.path }}" method="POST">
+  {% csrf_token %}
+  <div class="">
+    <p>Вы уверены что хотите удалить заказ?</p>
+
+    <div class="d-flex justify-content-end">
+    	<button type="button" onclick="document.getElementById('id01').style.display='none'" class="btn-sm cancelbtn btn btn-secondary">НЕТ</button>
+      	<button type="submit" onclick="document.getElementById('id01').style.display='none'" class="btn-sm deletebtn btn btn-danger ml-10">УДАЛИТЬ</button>
+    </div>
+  </div>
+</form>

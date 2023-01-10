@@ -1,0 +1,196 @@
+from django.http import JsonResponse
+from django.urls import reverse, reverse_lazy
+from django.shortcuts import redirect
+from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
+from django.views.generic.base import View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+from task_management.models import Demand, DemandDistribution
+from task_management.forms import DemandDistributionForm
+from task_management.mixin_views import DemandMixin, DemandEditMixin, DemandDistributionMixin
+from employment_portfolio.forms import CommentForm, ClaimForm
+from employment_portfolio.mixin_views import CommentMixin, CommentEditMixin, ClaimMixin, ClaimEditMixin
+from chat.mixin_views import MessageMixin
+from accounts.models import CustomUser
+from actions.mixin_views import ActionMixin, ActionContextMixin
+
+
+# не знаю
+class DemandEditMixin(DemandEditMixin):
+    success_url = reverse_lazy('student_dashboard:demand_list')
+
+    def get_object(self, queryset=None):
+        try:
+            return super().get_object(queryset)
+        except AttributeError:
+            return None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['demand_file_form_set'] = self.get_demand_file_formset()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        instance = self.get_object()
+        form = self.form_class(request.POST, instance=instance)
+        demand_file_formset = self.get_demand_file_formset(
+            data=request.POST, files_data=request.FILES, instance=None)
+        if form.is_valid() and demand_file_formset.is_valid():
+            instance = form.save(commit=False)
+            form.instance.student = self.request.user
+            demand_files = demand_file_formset.save(commit=False)
+            instance.save()
+            self.save_demand_file_formset(instance, demand_files)
+            return redirect('student_dashboard:demand_list')
+
+
+# Список заказов
+class DemandListView(DemandMixin, ActionContextMixin, ListView):
+    template_name = 'student_dashboard/demand/list.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(student=self.request.user)
+
+
+# Добавить заказ
+class DemandCreateView(DemandMixin, DemandEditMixin, CreateView):
+    template_name = 'student_dashboard/demand/form.html'
+
+
+# Обновить заказ
+class DemandUpdateView(DemandMixin, DemandEditMixin, UpdateView):
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:demand_list')})
+
+    def form_invalid(self, form):
+        form_html = render_crispy_form(form)
+        return JsonResponse({'success': False, 'form_html': form_html})
+
+
+# Удалить заказ
+class DemandDeleteView(DemandMixin, DeleteView):
+    template_name = 'student_dashboard/demand/delete.html'
+    success_url = reverse_lazy('student_dashboard:demand_list')
+
+
+# Удаить задания
+class DemandDistributionDeleteView(DemandDistributionMixin, DeleteView):
+    template_name = "task_management/demand/delete.html"
+    success_url = reverse_lazy('expert_dashboard:new_task_list')
+
+
+# Профиль студента
+class StudentProfileView(TemplateView):
+    template_name = 'student_dashboard/profile/list.html'
+
+
+# Мой баланс
+class MyBalanceView(TemplateView):
+    template_name = 'student_dashboard/balance/list.html'
+
+
+# Выбирать эксперта
+class ExpertChooseView(TemplateView, View):
+    template_name = 'student_dashboard/expert/choose.html'
+
+    def get(self, request, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        form = DemandDistributionForm()
+        return self.render_to_response({'pk': pk, 'form': form})
+
+    def post(self, request, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        instance = DemandDistribution.objects.get(id=pk)
+        form = DemandDistributionForm(request.POST, instance=instance)
+        instance.status = 3
+        instance.phone_number = form
+        instance.save()
+        return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:demand_list')})
+
+
+# не знаю
+class ExpertDetailView(DemandDistributionMixin, TemplateView):
+    template_name = 'student_dashboard/expert/detail.html'
+
+    def get(self, request, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        demand_distribution = DemandDistribution.objects.get(id=pk)
+        return self.render_to_response({'pk': pk, 'demand_distribution': demand_distribution})
+
+    def post(self, request, **kwargs):
+        return JsonResponse({})
+
+
+# Оставить комментарий
+class CommentCreateView(CommentMixin, CommentEditMixin, CreateView):
+    template_name = 'student_dashboard/comment/create.html'
+
+    def form_valid(self, form):
+        expert_id = self.kwargs.get('expert', None)
+        expert = CustomUser.objects.get(id=expert_id)
+        comment_form = CommentForm(self.request.POST)
+        if comment_form.is_valid():
+            form_create = comment_form.save(commit=False)
+            form_create.expert = expert
+            form_create.student = self.request.user
+            form_create.save()
+            return redirect('student_dashboard:demand_list')
+        return super().form_valid(form)
+
+
+# не знаю
+class NotificationListView(ActionMixin, ListView):
+    template_name = 'student_dashboard/notification/list.html'
+    context_object_name = 'notifications'
+
+
+# Пожаловаться
+class ClaimCreateView(ClaimMixin, ClaimEditMixin, CreateView):
+    template_name = 'student_dashboard/claim/create.html'
+
+    def form_valid(self, form):
+        expert_id = self.kwargs.get('pk', None)
+        expert = CustomUser.objects.get(id=expert_id)
+        claim_form = ClaimForm(self.request.POST)
+        if claim_form.is_valid():
+            form_create = claim_form.save(commit=False)
+            form_create.expert = expert
+            form_create.save()
+            return redirect('student_dashboard:demand_list')
+        return super().form_valid(form)
+
+
+# не знаю
+class MessageListView(MessageMixin, ListView):
+    template_name = 'student_dashboard/chat/message/list.html'
+    content_type_model = DemandDistribution
+
+
+class ArchiveView(View):
+
+    def post(self, request, **kwargs):
+        demand_id = self.kwargs.get('pk', None)
+        demand = Demand.objects.get(id=demand_id)
+        demand.is_archive = True
+        demand.save()
+        return redirect('student_dashboard:demand_list')
+
+
+class ArchiveListView(TemplateView):
+    template_name = 'student_dashboard/archive/index.html'
+
+    def get(self, request):
+        demands = Demand.objects.filter(is_archive=True)
+        return self.render_to_response({'demands': demands})
+
+
+class FinishedTaskListView(DemandDistributionMixin, ListView):
+    template_name = 'student_dashboard/finished/list.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(status=4)
