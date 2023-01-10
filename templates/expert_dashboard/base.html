@@ -212,11 +212,13 @@
 									<i class="bi bi-universal-access fa-fw me-2"></i>
 									Профиль
 								</a>
-								<a class="list-group-item {% if url_name == 'expert_dashboard:team_task_list' %}active{% endif %}"
-								   href="{% url 'expert_dashboard:team_task_list' %}">
-									<i class="bi bi-ui-checks-grid fa-fw me-2"></i>
-									Ежедневные задания
-								</a>
+								{% if request.user.is_developer %}
+									<a class="list-group-item {% if url_name == 'expert_dashboard:team_task_list' %}active{% endif %}"
+									   href="{% url 'expert_dashboard:team_task_list' %}">
+										<i class="bi bi-ui-checks-grid fa-fw me-2"></i>
+										Ежедневные задания
+									</a>
+								{% endif %}
 								<a class="list-group-item {% if url_name == 'expert_dashboard:new_task_list' %}active{% endif %}"
 								   href="{% url 'expert_dashboard:new_task_list' %}">
 									<i class="bi bi-folder-check fa-fw me-2"></i>

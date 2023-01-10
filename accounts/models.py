@@ -18,6 +18,7 @@ class CustomUser(AbstractUser):
     )
     role = models.PositiveSmallIntegerField(choices=USER_ROLE_CHOICES, default=USERTYPE_STUDENT)
     email = models.EmailField(_('email address'), unique=True)
+    is_developer = models.BooleanField(default=False)
 
     class Meta(object):
         db_table = 'custom_user'

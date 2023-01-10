@@ -1,17 +1,25 @@
 from django import forms
-from .models import Task,EmployeeDayRating
+from django.contrib.auth import get_user_model
+from .models import Task, EmployeeDayRating
+User = get_user_model()
 
 
 class TaskForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user'].queryset = User.objects.filter(is_developer=True)
+
     class Meta:
         model = Task
-        fields = ['description', 'date', 'status', 'comment']
+        fields = ['description', 'date', 'status', 'comment', 'user']
+        exclude = ('send_by', )
         labels = {
-            'description':'Описание:',
+            'description': 'Описание:',
             'date': 'Дата:',
             'status': 'Cтатус:',
-            'comment': 'Комментарий:'
+            'comment': 'Комментарий:',
+            'user': 'Выполняющий сотрудник'
         }
         widgets = {'date': forms.HiddenInput()}
 

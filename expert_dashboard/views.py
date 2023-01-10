@@ -54,7 +54,7 @@ class TeamTaskListView(TaskMixin, ListView):
         rating_exists = EmployeeDayRating.objects.filter(
             date=today, user=self.request.user).exists()
         context['today'] = today
-        context['rating_exists'] = rating_exists
+        context['s'] = rating_exists
         return context
 
 
@@ -65,6 +65,11 @@ class TeamTaskCreateView(TaskMixin, TaskEditMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def get_initial(self):
+        return {
+            'user': self.request.user
+        }
 
 
 class TeamTaskUpdateView(TaskMixin, UpdateView):

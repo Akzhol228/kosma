@@ -20,3 +20,4 @@ DATABASES = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+CSRF_TRUSTED_ORIGINS = ['http://istudent.kz', 'http://195.210.47.115']

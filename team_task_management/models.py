@@ -15,6 +15,7 @@ class Task(models.Model):
     status = models.PositiveSmallIntegerField(
         choices=STATUS_TYPE_CHOICES, default=1, verbose_name='Статус')
     comment = models.TextField(blank=True, verbose_name='Комментарий')
+    send_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='send_by')
 
 
 class EmployeeDayRating(models.Model):

@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f65cd55c-4214-4ef2-b0b0-13bad545b650" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expert_dashboard/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/expert_dashboard/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/users/1639499018_1-hdpic-club-p-nissan-tsefiro-a32-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/team_task_management/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/team_task_management/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team_task_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/team_task_management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/expert_dashboard/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/expert_dashboard/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/team_task_management/team_task/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/team_task_management/team_task/list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
