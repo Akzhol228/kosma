@@ -6,8 +6,22 @@ from django.db.models import Q
 
 class Demand(models.Model):
     """Список поступивщих задач"""
+    DIPLOM_TYPE_CHOICES = (
+        (1, 'Общая'),
+        (2, 'Теория'),
+        (3, 'Практика')
+    )
+    LANG_CHOICES = (
+        (1, 'Казахский'),
+        (2, 'Русский'),
+        (3, 'Английский')
+    )
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     type_task = models.ForeignKey(TypeTask, on_delete=models.CASCADE)
+    diplom_type = models.PositiveSmallIntegerField(
+        choices=DIPLOM_TYPE_CHOICES, default=1)
+    language = models.PositiveSmallIntegerField(
+        choices=LANG_CHOICES, default=1)
     subject = models.CharField(max_length=250)
     deadline = models.DateField()
     comment = models.TextField()
@@ -48,5 +62,6 @@ class DemandDistribution(models.Model):
     status = models.PositiveSmallIntegerField(
         choices=STATUS_TYPE_CHOICES, default=1)
     price = models.DecimalField(max_digits=5, decimal_places=0, null=True, blank=True)
+    prepayment = models.DecimalField(max_digits=5, decimal_places=0, null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
     phone_number = models.CharField(max_length=12, null=True, blank=True)

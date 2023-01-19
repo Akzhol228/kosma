@@ -43,6 +43,7 @@ urlpatterns += [
     path('expert_dashboard/', include('expert_dashboard.urls', namespace='expert_dashboard')),
     path('chat/', include('chat.urls', namespace='chat')),
     path('directory/', include('directory.urls', namespace='directory')),
+    path('manager_dashboard/', include('manager_dashboard.urls', namespace='manager_dashboard')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

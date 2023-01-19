@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'task_management',
     'expert_dashboard',
     'chat',
-    'team_task_management'
+    'team_task_management',
+    'manager_dashboard',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
