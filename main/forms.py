@@ -7,4 +7,4 @@ class CallBackForm(forms.ModelForm):
 
     class Meta:
         model = CallBack
-        fields = ['phone_number', 'last_name', 'first_name']
+        fields = ['phone_number', 'first_name']
