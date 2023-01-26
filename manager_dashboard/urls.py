@@ -13,6 +13,5 @@ urlpatterns = [
         name='task_create'),
     path('task/update/<int:pk>>', views.TaskUdateView.as_view(), 
         name='task_update'),
-    path('', views.DemandListView.as_view(), name='demand_list'),
     path('call_back/list', views.CallBackListView.as_view(), name='call_back_list'),
 ]
