@@ -26,6 +26,7 @@ class Demand(models.Model):
     deadline = models.DateField()
     comment = models.TextField()
     is_archive = models.BooleanField(default=False)
+    is_distribution = models.BooleanField(default=True)
 
     def get_responsive_distributions(self):
         return self.demanddistribution_set.filter(status__in=[2, 3, 4]).all()

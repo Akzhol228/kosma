@@ -1,7 +1,7 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-
+from accounts.models import CustomUser
 from .models import Demand, DemandDistribution, DemandFile, DemandCompletedFile
 
 
@@ -15,12 +15,13 @@ class DemandForm(forms.ModelForm):
 
     class Meta:
         model = Demand
-        fields = ['type_task', 'subject', 'deadline', 'comment']
+        fields = ['type_task', 'subject', 'deadline', 
+        'comment']
+        exclude = ['student']
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 4}),
             'deadline': forms.TextInput(attrs={'type': 'date'})
         }
-        exclude = ('student', )
         labels = {
             'type_task': 'Тип задачи',
             'subject': 'Предмет',
@@ -36,10 +37,12 @@ class DemandDistributionForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.template = 'task_management/demand_distribution/form_inner.html'
+        self.fields['expert'].queryset = CustomUser.objects.filter(role=2)
+
 
     class Meta:
         model = DemandDistribution
-        fields = ['status', 'price', 'comment', 'phone_number']
+        fields = ['status', 'price', 'comment', 'phone_number', 'expert', 'prepayment']
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 3}),
         }

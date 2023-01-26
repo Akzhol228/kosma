@@ -1,45 +1,46 @@
 {% extends 'manager_dashboard/base.html' %}
 {% load task_management_tags %}
+{% load static %}
 
 {% block content %}
+
 <form method="get">
-	<!-- <label for="student_email">Email студента</label>
-	<input type="text" id="student_email" name="student_email"> -->
+	<label for="demand_coment">Email</label>
+	{{ filter.form.student_email}}
+	<label for="demand_coment">Тип Дип. Работы</label>
+	{{ filter.form.diplom_type}}
 	<label for="demand_coment">Коментарии студента</label>
 	{{ filter.form.comment}}
 	<button type="submit">
 		поиск
 	</button>
 </form>
-<table>
-	<tr>
-		<th>Студент</th>
-		<th>Тип Дип. Работы</th>
-		<th>Язык</th>
-		<th>Срок</th>
-		<th>Коментарии</th>
-		<th>Цена</th>
-		<th>Предоплата</th>
-		<th>Статус</th>
-		<th>Коментарии</th>
-		<th>Номер телефона</th>
-	</tr>
+
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th>Коментарии</th>
+			<th>Студент</th>
+			<th>Тип Дип. Работы</th>
+			<th>Срок</th>
+			<th>Эксперт</th>
+			<th>Документы</th>
+		</tr>
+	</thead>
+	<tbody>
 	{% for demand in filter.qs %}
 		<tr>
+			<td data-modal-url="{% url 'manager_dashboard:task_detail' pk=demand.id %}" class=" open-universal-modal" data-modal-title="Детальная информация">{{demand.comment}}</td>
 			<td>{{demand.student.email}}</td>
 			<td>{{demand.get_diplom_type_display}}</td>
-			<td>{{demand.get_language_display}}</td>
 			<td>{{demand.deadline}}</td>
-			<td>{{demand.comment}}</td>
 			{% get_selected_demand_distribution query=demand status=None as selected_demand_distribution %}
 			{% if selected_demand_distribution %}
-			<td>{{selected_demand_distribution.price}}</td>
-			<td>{{selected_demand_distribution.prepayment}}</td>
-			<td>{{selected_demand_distribution.get_status_display}}</td>
-			<td>{{selected_demand_distribution.comment}}</td>
-			<td>{{selected_demand_distribution.phone_number}}</td>
+			<td>{{selected_demand_distribution.expert.email}}</td>
 			{% endif %}
+			<td><a class="btn btn-success" href="{% url 'manager_dashboard:task_documents_detail' pk=demand.pk %}">Документы</a></td>
 		</tr>
 	{% endfor %}
+</tbody>
 </table>
 {% endblock %}

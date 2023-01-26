@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
@@ -38,11 +38,13 @@ class DemandEditMixin(DemandEditMixin):
             data=request.POST, files_data=request.FILES, instance=None)
         if form.is_valid() and demand_file_formset.is_valid():
             instance = form.save(commit=False)
-            form.instance.student = self.request.user
+            instance.student = self.request.user
             demand_files = demand_file_formset.save(commit=False)
             instance.save()
             self.save_demand_file_formset(instance, demand_files)
             return redirect('student_dashboard:demand_list')
+        return render(request, 'student_dashboard/demand/form.html',
+                      {'form': form})
 
 
 # Список заказов
