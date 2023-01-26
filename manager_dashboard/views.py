@@ -10,6 +10,11 @@ from .forms import DemandManagerForm
 from accounts.forms import RegisterForm
 from task_management.forms import DemandDistributionForm
 from accounts.models import CustomUser 
+from task_management.mixin_views import DemandMixin
+from task_management.models import Demand
+from manager_dashboard.filters import DemandFilter, CallBackFilter
+from main.models import CallBack
+from django.db.models import Q
 
 
 class TaskListView(DemandMixin, ListView):
@@ -113,4 +118,11 @@ class TaskUdateView(DemandMixin, TaskEditMixin, UpdateView):
 
     
   
+class CallBackListView(ListView):
+    template_name = 'manager_dashboard/callback/list.html'
+    model = CallBack
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = CallBackFilter(self.request.GET, queryset=CallBack.objects.all())
+        return context

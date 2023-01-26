@@ -3,11 +3,9 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
-from django.views.generic.base import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from task_management.models import Demand, DemandDistribution
-from task_management.forms import DemandDistributionForm
+from task_management.models import DemandDistribution
 from task_management.mixin_views import DemandMixin, DemandEditMixin, DemandDistributionMixin
 from employment_portfolio.forms import CommentForm, ClaimForm
 from employment_portfolio.mixin_views import CommentMixin, CommentEditMixin, ClaimMixin, ClaimEditMixin
@@ -16,7 +14,7 @@ from accounts.models import CustomUser
 from actions.mixin_views import ActionMixin, ActionContextMixin
 
 
-# не знаю
+# Миксн заказа
 class DemandEditMixin(DemandEditMixin):
     success_url = reverse_lazy('student_dashboard:demand_list')
 
@@ -96,35 +94,23 @@ class MyBalanceView(TemplateView):
 
 
 # Выбирать эксперта
-class ExpertChooseView(TemplateView, View):
+class ExpertChooseView(DemandDistributionMixin, UpdateView):
     template_name = 'student_dashboard/expert/choose.html'
+    success_url = reverse_lazy('student_dashboard:demand_list')
+    fields = ('status', 'phone_number', )
 
-    def get(self, request, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        form = DemandDistributionForm()
-        return self.render_to_response({'pk': pk, 'form': form})
-
-    def post(self, request, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        instance = DemandDistribution.objects.get(id=pk)
-        form = DemandDistributionForm(request.POST, instance=instance)
-        instance.status = 3
-        instance.phone_number = form
-        instance.save()
-        return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:demand_list')})
+    def get_initial(self):
+        return { 'status': 3 }
 
 
-# не знаю
-class ExpertDetailView(DemandDistributionMixin, TemplateView):
+# Детальная информация о эксперте
+class ExpertDetailView(DemandDistributionMixin, ListView):
     template_name = 'student_dashboard/expert/detail.html'
 
-    def get(self, request, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        demand_distribution = DemandDistribution.objects.get(id=pk)
-        return self.render_to_response({'pk': pk, 'demand_distribution': demand_distribution})
-
-    def post(self, request, **kwargs):
-        return JsonResponse({})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['demand_distribution'] = get_object_or_404(DemandDistribution, id=self.kwargs.get('pk', None))
+        return context
 
 
 # Оставить комментарий
@@ -144,7 +130,7 @@ class CommentCreateView(CommentMixin, CommentEditMixin, CreateView):
         return super().form_valid(form)
 
 
-# не знаю
+# Список увидомлении
 class NotificationListView(ActionMixin, ListView):
     template_name = 'student_dashboard/notification/list.html'
     context_object_name = 'notifications'
@@ -166,30 +152,33 @@ class ClaimCreateView(ClaimMixin, ClaimEditMixin, CreateView):
         return super().form_valid(form)
 
 
-# не знаю
+# Список сообщений
 class MessageListView(MessageMixin, ListView):
     template_name = 'student_dashboard/chat/message/list.html'
     content_type_model = DemandDistribution
 
 
-class ArchiveView(View):
+# Страница архива
+class ArchiveView(DemandMixin, UpdateView):
+    template_name = 'student_dashboard/archive/create.html'
+    success_url = reverse_lazy('student_dashboard:demand_list')
+    fields = ('is_archive', )
 
-    def post(self, request, **kwargs):
-        demand_id = self.kwargs.get('pk', None)
-        demand = Demand.objects.get(id=demand_id)
-        demand.is_archive = True
-        demand.save()
-        return redirect('student_dashboard:demand_list')
+    def get_initial(self):
+        return { 'is_archive': True }
 
 
-class ArchiveListView(TemplateView):
+# Список архива
+class ArchiveListView(DemandMixin, ListView):
     template_name = 'student_dashboard/archive/index.html'
+    context_object_name = 'demands'
 
-    def get(self, request):
-        demands = Demand.objects.filter(is_archive=True)
-        return self.render_to_response({'demands': demands})
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(is_archive=True)
 
 
+# Выполненные задачи
 class FinishedTaskListView(DemandDistributionMixin, ListView):
     template_name = 'student_dashboard/finished/list.html'
 
