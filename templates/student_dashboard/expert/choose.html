@@ -4,7 +4,8 @@
     <div class="modal-body">
         <p class="mb-0 color-red"> Вы точно хотите выбрать данного исполнителя?   </p>
         <p class="mb-0 color-red"> Тогда оставьте ваш номер тут чтобы вы могли оплатить с Каспий </p>
-        {{form.phone_number|add_class:"form-control"|append_attr:"placeholder:Введите номер телефона"}}
+        {{ form.phone_number|add_class:"form-control"|append_attr:"placeholder:Введите номер телефона" }}
+        {{ form.status.as_hidden }}
     </div>
     <div class="modal-footer">
         <input type="submit" class="btn btn-danger btn-sm" value="Да хочу">
