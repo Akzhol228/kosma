@@ -8,7 +8,7 @@
         <div class="card-body">
           <div class="d-flex flex-column align-items-center text-center">
             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-            <a href="{% url 'student_dashboard:student_profile_edit' %}">изменить профиль</a>
+            <a href="#">изменить фото</a>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
               <h6 class="mb-0">ФИО</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{request.user.first_name}} {{request.user.last_name}}
+              Жангазы Саят
             </div>
           </div>
           <hr>
@@ -30,7 +30,7 @@
               <h6 class="mb-0">Эл. адрес</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{request.user.email}}
+              sayat@mail.ru
             </div>
           </div>
           <hr>
@@ -39,7 +39,7 @@
               <h6 class="mb-0">Номер</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{request.user.phone_number}}
+              +77771255804
             </div>
           </div>
           <hr>
@@ -48,7 +48,7 @@
               <h6 class="mb-0">Роль</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{request.user.role}}
+              Студент
             </div>
           </div>
           <hr>
