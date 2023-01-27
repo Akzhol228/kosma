@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from task_management.mixin_views import DemandMixin, DemandEditMixin
 from task_management.models import Demand, DemandDistribution
 from manager_dashboard.filters import DemandFilter
-from .forms import DemandManagerForm
+from .forms import DemandManagerForm, DemandDistributionManagerForm
 from accounts.forms import RegisterForm
 from task_management.forms import DemandDistributionForm
 from accounts.models import CustomUser 
@@ -62,7 +62,7 @@ class TaskEditMixin:
 
 class TaskCreateView(DemandMixin, TaskEditMixin, CreateView):
     template_name = 'manager_dashboard/task/form.html'
-    distribution_form_class = DemandDistributionForm
+    distribution_form_class = DemandDistributionManagerForm
     demand_file_form_set = None
 
     def get_context_data(self, **kwargs):
@@ -87,13 +87,13 @@ class TaskCreateView(DemandMixin, TaskEditMixin, CreateView):
 
 class TaskUdateView(DemandMixin, TaskEditMixin, UpdateView):
     template_name = 'manager_dashboard/task/form.html'
-    distribution_form_class = DemandDistributionForm
+    distribution_form_class = DemandDistributionManagerForm
     demand_file_form_set = None
 
     def dispatch(self, *args, **kwargs):
         self.pk = self.kwargs.get('pk')
         self.demand = Demand.objects.get(pk=self.pk)
-        self.demand_distribution = DemandDistribution.objects.get(demand=self.demand)
+        self.demand_distribution = DemandDistribution.objects.filter(demand=self.demand).last()
         return super().dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
