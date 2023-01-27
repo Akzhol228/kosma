@@ -103,7 +103,7 @@ class MyBalanceView(TemplateView):
 class ExpertChooseView(DemandDistributionMixin, UpdateView):
     template_name = 'student_dashboard/expert/choose.html'
     success_url = reverse_lazy('student_dashboard:demand_list')
-    fields = ('status', 'phone_number', )
+    fields = ['status', 'phone_number']
 
     def get_initial(self):
         return { 'status': 3 }

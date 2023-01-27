@@ -1,5 +1,5 @@
 {% load widget_tweaks %}
-<form class="row g-4" action="{{ request.path }}" method="POST">
+<form class="row g-4" action="{{ request.path }}" method="POST" id="form-universal-modal">
      {% csrf_token %}
     <div class="modal-body">
         <p class="mb-0 color-red"> Вы точно хотите выбрать данного исполнителя?   </p>
