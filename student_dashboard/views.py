@@ -52,7 +52,7 @@ class DemandListView(DemandMixin, ActionContextMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(student=self.request.user)
+        return qs.filter(student=self.request.user, is_archive=False)
 
 
 # Добавить заказ
