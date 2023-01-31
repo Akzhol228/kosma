@@ -5,8 +5,9 @@ from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from task_management.models import DemandDistribution
+from task_management.models import DemandDistribution, Demand
 from task_management.mixin_views import DemandMixin, DemandEditMixin, DemandDistributionMixin
+from task_management.forms import DemandForm
 from employment_portfolio.forms import CommentForm, ClaimForm
 from employment_portfolio.mixin_views import CommentMixin, CommentEditMixin, ClaimMixin, ClaimEditMixin
 from chat.mixin_views import MessageMixin
@@ -88,6 +89,11 @@ class StudentProfileView(TemplateView):
     template_name = 'student_dashboard/profile/list.html'
 
 
+# Профиль студента
+class StudentProfileEditView(TemplateView):
+    template_name = 'student_dashboard/profile/edit.html'
+
+
 # Мой баланс
 class MyBalanceView(TemplateView):
     template_name = 'student_dashboard/balance/list.html'
@@ -97,11 +103,10 @@ class MyBalanceView(TemplateView):
 class ExpertChooseView(DemandDistributionMixin, UpdateView):
     template_name = 'student_dashboard/expert/choose.html'
     success_url = reverse_lazy('student_dashboard:demand_list')
-    fields = ('status', 'phone_number', )
+    fields = ['status', 'phone_number']
 
     def get_initial(self):
         return { 'status': 3 }
-
 
 # Детальная информация о эксперте
 class ExpertDetailView(DemandDistributionMixin, ListView):
@@ -159,7 +164,7 @@ class MessageListView(MessageMixin, ListView):
 
 
 # Страница архива
-class ArchiveView(DemandMixin, UpdateView):
+class DemandArchiveView(DemandMixin, UpdateView):
     template_name = 'student_dashboard/archive/create.html'
     success_url = reverse_lazy('student_dashboard:demand_list')
     fields = ('is_archive', )
@@ -168,8 +173,7 @@ class ArchiveView(DemandMixin, UpdateView):
         return { 'is_archive': True }
 
 
-# Список архива
-class ArchiveListView(DemandMixin, ListView):
+class DemandArchiveListView(DemandMixin, ListView):
     template_name = 'student_dashboard/archive/index.html'
     context_object_name = 'demands'
 

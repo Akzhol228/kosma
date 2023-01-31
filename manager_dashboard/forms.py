@@ -1,7 +1,7 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from accounts.models import CustomUser
-from task_management.models import Demand
+from task_management.models import Demand, DemandDistribution
 
 
 class DemandManagerForm(forms.ModelForm):
@@ -26,4 +26,27 @@ class DemandManagerForm(forms.ModelForm):
             'subject': 'Предмет',
             'deadline': 'Срок',
             'comment': 'Комментарий'
+        }
+
+class DemandDistributionManagerForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.template = 'task_management/demand_distribution/form_inner.html'
+        self.fields['expert'].queryset = CustomUser.objects.filter(role=2)
+
+
+    class Meta:
+        model = DemandDistribution
+        fields = ['status', 'price', 'comment', 'phone_number', 'expert', 'prepayment']
+        widgets = {
+            'comment': forms.Textarea(attrs={'rows': 3}),
+        }
+        labels = {
+            'status': 'Статус',
+            'price': 'Введти предлогаемую цену',
+            'comment': 'Введите комментарий',
+            'phone_number': 'Введите ваш телефон номер'
         }

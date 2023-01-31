@@ -37,12 +37,12 @@ class DemandDistributionForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.template = 'task_management/demand_distribution/form_inner.html'
-        self.fields['expert'].queryset = CustomUser.objects.filter(role=2)
 
 
     class Meta:
         model = DemandDistribution
-        fields = ['status', 'price', 'comment', 'phone_number', 'expert', 'prepayment']
+        fields = ['status', 'price', 'comment', 'phone_number', 'prepayment']
+        exclude = ['expert']
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 3}),
         }
