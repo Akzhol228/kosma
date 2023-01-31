@@ -37,7 +37,7 @@ class TaskDetailView(TemplateView):
     def get(self, request, **kwargs):
         pk = self.kwargs.get('pk', None)
         demand = Demand.objects.get(pk=pk)
-        demand_distribution = DemandDistribution.objects.filter(demand=pk).last()
+        demand_distribution = DemandDistribution.objects.get(demand=pk, is_expert_selected=True)
         return self.render_to_response({'demand': demand, 'demand_distribution': demand_distribution})
 
 
@@ -77,10 +77,13 @@ class TaskCreateView(DemandMixin, TaskEditMixin, CreateView):
             data=request.POST, files_data=request.FILES, instance=None)
         distribution_form = self.distribution_form_class(request.POST)
         if form.is_valid() and distribution_form.is_valid() and demand_file_formset.is_valid():
-            instance = form.save()
+            instance = form.save(commit=False)
+            instance.is_expert_selected = True
+            instance.save()
             demand_files = demand_file_formset.save(commit=False)
             distribution_form_obj = distribution_form.save(commit=False)
             distribution_form_obj.demand = instance
+            distribution_form_obj.is_expert_selected = True
             distribution_form_obj.save()
             self.save_demand_file_formset(instance, demand_files)
             return redirect("manager_dashboard:task_list")
@@ -93,7 +96,7 @@ class TaskUdateView(DemandMixin, TaskEditMixin, UpdateView):
     def dispatch(self, *args, **kwargs):
         self.pk = self.kwargs.get('pk')
         self.demand = Demand.objects.get(pk=self.pk)
-        self.demand_distribution = DemandDistribution.objects.filter(demand=self.demand).last()
+        self.demand_distribution = DemandDistribution.objects.get(demand=self.demand, is_expert_selected=True)
         return super().dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):

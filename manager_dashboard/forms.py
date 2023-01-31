@@ -17,6 +17,7 @@ class DemandManagerForm(forms.ModelForm):
         model = Demand
         fields = ['type_task', 'student', 'subject', 'deadline', 
         'comment', 'diplom_type', 'language', 'is_distribution']
+        exclude = ['is_expert_selected']
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 4}),
             'deadline': forms.TextInput(attrs={'type': 'date'})

@@ -17,7 +17,7 @@ class DemandForm(forms.ModelForm):
         model = Demand
         fields = ['type_task', 'subject', 'deadline', 
         'comment']
-        exclude = ['student']
+        exclude = ['student', 'is_expert_selected']
         widgets = {
             'comment': forms.Textarea(attrs={'rows': 4}),
             'deadline': forms.TextInput(attrs={'type': 'date'})
@@ -68,4 +68,4 @@ class DemandCompletedFileForm(forms.ModelForm):
 
     class Meta:
         model = DemandCompletedFile
-        fields = ['file', 'file', 'demand']
+        fields = ['file', 'demand']

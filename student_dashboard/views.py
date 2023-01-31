@@ -103,10 +103,18 @@ class MyBalanceView(TemplateView):
 class ExpertChooseView(DemandDistributionMixin, UpdateView):
     template_name = 'student_dashboard/expert/choose.html'
     success_url = reverse_lazy('student_dashboard:demand_list')
-    fields = ['status', 'phone_number']
+    fields = ['status', 'phone_number', 'is_expert_selected']
 
     def get_initial(self):
-        return { 'status': 3 }
+        return { 'status': 3, 'is_expert_selected': True }
+
+    def form_valid(self, form):
+        redirect_url = super().form_valid(form)
+        pk = self.kwargs.get('pk')
+        demand_distribution = DemandDistribution.objects.get(pk=pk)
+        demand_distribution.demand.is_expert_selected = True
+        demand_distribution.demand.save()
+        return redirect_url
 
 # Детальная информация о эксперте
 class ExpertDetailView(DemandDistributionMixin, ListView):
