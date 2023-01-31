@@ -48,8 +48,15 @@
 	<!-- Nav START -->
 	<nav class="navbar navbar-expand-xl z-index-9">
 		<div class="container">
+			<button class="navbar-toggler  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse2" aria-controls="navbarCollapse2" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-animation">
+					<span></span>
+					<span></span>
+					<span></span>
+				</span>
+			</button>
 			<!-- Logo START -->
-			<a class="navbar-brand" href="index.html">
+			<a class="navbar-brand " href="index.html">
 				<img class="light-mode-item navbar-brand-item" src="{% static 'assets/images/logo.svg' %}" alt="logo">
 				<img class="dark-mode-item navbar-brand-item" src="{% static 'assets/images/logo-light.svg' %}" alt="logo">
 			</a>
@@ -86,7 +93,6 @@
 								<li>
 									<a class="dropdown-item me-4 {% if language.code == LANGUAGE_CODE %} selected{% endif %}"
 									   href="/{{ language.code }}/">
-<!--										<img class="fa-fw me-2" src="{% static 'assets/images/flags/sp.svg' %}" alt="">-->
 										{{ language.name_local }}
 									</a>
 								</li>
@@ -98,7 +104,7 @@
 				<!-- Nav Main menu END -->
 			</div>
 			<!-- Main navbar END -->
-
+			
 			<!-- Profile and notification START -->
 			<ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
 
@@ -121,21 +127,19 @@
 						</ul>
 					</li>
 				{% else %}
-					<li class="nav-item ">
+					<li class="nav-item sign_up_none">
 						<a class="nav-link" style="margin-top:-2px; " href="{% url 'accounts:login' %}">Вход</a>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link" href="{% url 'student_register' %}">Регистрация</a>
+					<li class="sign_up_block">
+						<a  href="{% url 'accounts:login'%}" class="btn btn-danger-soft mb-0"><i class="fas fa-sign-in-alt me-2"></i>Вход</a>
 					</li>
+
+					<!-- <li class="nav-item dropdown">
+						<a class="nav-link" href="{% url 'student_register' %}">Регистрация</a>
+					</li> -->
 				{% endif %}
 			</ul>
-			<button class="navbar-toggler  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse2" aria-controls="navbarCollapse2" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-animation">
-					<span></span>
-					<span></span>
-					<span></span>
-				</span>
-			</button>
+			
 			<!-- Profile and notification END -->
 		</div>
 	</nav>
@@ -383,14 +387,14 @@ Main Banner START -->
 
 			<!-- Right content START -->
 			<div class="col-lg-7 col-xl-6 text-center position-relative">
-				<div class="p-2  rounded-3 position-absolute top-50 translate-middle-y  d-sm-block" style="margin-top: -49px;left: 44.8%;z-index: 999;">
+				<!-- <div class="p-2  rounded-3 position-absolute top-50 translate-middle-y  d-sm-block" style="margin-top: -49px;left: 44.8%;z-index: 999;">
 					<a data-glightbox data-gallery="office-tour" href="https://www.youtube.com/embed/tXHviS-4ygo" class="btn btn-round btn-primary-shadow mb-0 overflow-visible me-7"> 
 						<i class="fas fa-play"></i>
 					</a>
-				</div>
+				</div> -->
 				<!-- Image -->
 				<div class="position-relative">
-					<img src="{% static 'assets/images/header.png' %}" alt="">
+					<img src="{% static 'assets/svg/header2.svg' %}" alt="">
 
 				</div>
 			</div>

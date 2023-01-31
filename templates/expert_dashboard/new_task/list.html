@@ -57,11 +57,15 @@
 									</div>
 									<div>
 									{% if demand_distribution.status == 1 %}
+										{% if demand_distribution.demand.is_expert_selected == False %}
 										<button class="open-universal-modal btn btn-success btn-sm"
 												data-modal-url="{% url 'task_management:demand_distribution_update' pk=demand_distribution.id %}"
 												data-modal-title="Предложить цену">
 											Предложить цену
 										</button>
+										{% else %}
+											Эксперт выбран
+										{% endif %}
 									{% else %}
 										<span class="badge bg-success ">Цена предложена ожидается ответ </span>
 									{% endif %}

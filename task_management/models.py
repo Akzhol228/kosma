@@ -27,6 +27,7 @@ class Demand(models.Model):
     comment = models.TextField()
     is_archive = models.BooleanField(default=False)
     is_distribution = models.BooleanField(default=True)
+    is_expert_selected = models.BooleanField(default=False)
 
     def get_responsive_distributions(self):
         return self.demanddistribution_set.filter(status__in=[2, 3, 4]).all()
@@ -42,7 +43,7 @@ class DemandFile(models.Model):
 
 
 class DemandCompletedFile(models.Model):
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=250, null=True, blank=True)
     demand = models.ForeignKey(Demand, on_delete=models.CASCADE)
     file = models.FileField(upload_to='demand_completed_files')
     date = models.DateField(auto_now_add=True)
@@ -66,3 +67,5 @@ class DemandDistribution(models.Model):
     prepayment = models.DecimalField(max_digits=5, decimal_places=0, null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
     phone_number = models.CharField(max_length=12, null=True, blank=True)
+    is_expert_selected = models.BooleanField(default=False)
+

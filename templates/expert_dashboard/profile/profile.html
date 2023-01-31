@@ -28,6 +28,9 @@
             </div>
             <div class="col-sm-9 text-secondary">
              {{ request.user.first_name}} {{ request.user.last_name}}
+             {% if not request.user.first_name or request.user.last_name %}
+             Нажмите «Редактировать», чтобы отобразить ваше ФИО.
+             {% endif %}
             </div>
           </div>
           <hr>
@@ -45,16 +48,23 @@
               <h6 class="mb-0">Роль</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{ request.user.role}}
+              {% if request.user.role == 2 %}
+              Эксперт
+              {% elif request.user.role == 1 %}
+              Студент
+              {% endif %}
+
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Образование</h6>
+              <h6 class="mb-0">Предметы, с которыми вы можете помочь:</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              (320) 380-4539
+              {% for subject in request.user.portfolio.subjects.all %}
+              {{subject}}
+              {% endfor %}
             </div>
           </div>
           <hr>

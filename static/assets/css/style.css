@@ -664,6 +664,10 @@ progress {
 @media (min-width: 768px) {
   .container-md, .container-sm, .container {
     max-width: 94%;
+
+  }
+  .navbar-brand{
+    display: none;
   }
 }
 @media (min-width: 992px) {
@@ -2673,6 +2677,9 @@ progress {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+   .sign_up_none{
+    display: none;
+  }
 }
 @media (max-width: 991.98px) {
   .table-responsive-lg {
@@ -2685,6 +2692,7 @@ progress {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+
 }
 @media (max-width: 1399.98px) {
   .table-responsive-xxl {
@@ -7501,12 +7509,21 @@ textarea.form-control-lg {
     transition: none;
   }
 }
+.sign_up_block{
+  display: none;
+}
 @media (max-width: 575.98px) {
   .navbar-exspert {
     padding-top: 15px;
   }
    .navbar-brand-exspert{
     display: none;
+  }
+  .sign_up_none{
+    display: none;
+  }
+  .sign_up_block{
+    display: block;
   }
   .nav-category .navbar-toggler{
     display: none;

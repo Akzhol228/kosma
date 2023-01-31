@@ -1,10 +1,12 @@
 function subject_search(){
-    $('#id_subject').selectize({
+    var $select = $('#id_subject').selectize({
         valueField: 'title',
         labelField: 'title',
         searchField: 'title',
         placeholder: 'Поиск предмета ...',
         options: [],
+        create: true,
+        multiple: false,
         load: function(query, callback) {
             if (!query  || query.length < 2) return callback();
             $.ajax({
@@ -17,7 +19,7 @@ function subject_search(){
                     callback();
                 },
                 success: function(res) {
-                    return callback(res)
+                    return callback(res);
                 }
             })
         }

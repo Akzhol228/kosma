@@ -1,17 +1,20 @@
-from django.urls import reverse_lazy
+from django.http import JsonResponse
+from django.urls import reverse_lazy, reverse
+from django.views.generic.base import TemplateResponseMixin, View
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from actions.mixin_views import ActionMixin
 from django.views.generic.base import TemplateView
 from chat.mixin_views import MessageMixin
-from task_management.models import DemandDistribution, DemandFile, Demand
+from task_management.models import DemandDistribution, DemandFile, Demand, DemandCompletedFile
 from team_task_management.models import Task,EmployeeDayRating
-from task_management.mixin_views import DemandDistributionMixin
+from task_management.mixin_views import DemandDistributionMixin, DemandMixin
 from team_task_management.mixin_views import TaskMixin, TaskEditMixin
 from accounts.models import Profile
 from employment_portfolio.models import Comment
 from employment_portfolio.forms import ResumeForm
+from task_management.forms import DemandForm
 from team_task_management.forms import TaskForm, EmployeeDayRatingForm
 from datetime import date
 
@@ -154,4 +157,37 @@ class MessageListView(MessageMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['demand'] = get_object_or_404(Demand, pk=self.room_split_0)
         return context
+
+
+class CompletedFileCreateView(DemandMixin, TemplateResponseMixin, View):
+    template_name = 'task_management/demand_completed_file/form.html'
+
+    def get(self, request, *args, **kwargs):
+        demand_completed_file_form_set = self.get_demand_completed_file_formset()
+        return self.render_to_response({
+            'demand_completed_file_form_set': demand_completed_file_form_set})
+
+    def post(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        demand_distribution = DemandDistribution.objects.get(pk=pk)
+        demand = demand_distribution.demand.id
+        instance = Demand.objects.get(pk=demand)
+        demand_completed_file_form_set = self.get_demand_completed_file_formset(
+            data=request.POST, files_data=request.FILES, instance=None)
+        if demand_completed_file_form_set.is_valid():
+            demand_completed_file = demand_completed_file_form_set.save(commit=False)
+            self.save_demand_completed_file_formset(instance, demand_completed_file)
+            return JsonResponse({'success': True, 'redirect_url': reverse('expert_dashboard:my_task_list')})
+        demand_completed_file_form_set = self.get_demand_completed_file_formset()
+        return JsonResponse({'success': False, 'demand_completed_file_form_set': demand_completed_file_form_set})
+
+class CompletedFileDeleteView(DeleteView):
+    template_name = 'task_management/demand_completed_file/delete.html'
+    model = DemandCompletedFile
+    success_url = reverse_lazy('expert_dashboard:my_task_list')
+
+
+
+
+
 
