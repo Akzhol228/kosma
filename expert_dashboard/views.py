@@ -21,7 +21,14 @@ class NewTaskListView(DemandDistributionMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(expert=self.request.user.id, status=1)
+        comment = self.request.GET.get('text', '') 
+        return qs.filter(expert=self.request.user.id, status=1, demand__comment__icontains=comment)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('text', '')
+        return context
 
 
 class WaitingTaskListView(DemandDistributionMixin, ListView):
@@ -29,7 +36,13 @@ class WaitingTaskListView(DemandDistributionMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(expert=self.request.user.id, status__in=[2, 3])
+        student = self.request.GET.get('student', '')
+        return qs.filter(expert=self.request.user.id, status__in=[2, 3], expert__username__icontains=student)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('student', '')
+        return context
 
 
 class MyTaskListView(DemandDistributionMixin, ListView):
@@ -37,7 +50,14 @@ class MyTaskListView(DemandDistributionMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(expert=self.request.user.id, status=4)
+        student = self.request.GET.get('student', '')
+        return qs.filter(expert=self.request.user.id, status=4, expert__username__icontains=student)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('student', '')
+        return context
 
 
 class TeamTaskListView(TaskMixin, ListView):
