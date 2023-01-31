@@ -1,5 +1,5 @@
 {% extends 'manager_dashboard/base.html' %}
-{% load task_management_tags %}
+{% load manager_dashboard_tags %}
 {% load static %}
 
 {% block content %}
@@ -34,7 +34,7 @@
 			<td>{{demand.student.email}}</td>
 			<td>{{demand.get_diplom_type_display}}</td>
 			<td>{{demand.deadline}}</td>
-			{% get_selected_demand_distribution query=demand status=None as selected_demand_distribution %}
+			{% get_selected_demand_distribution query=demand as selected_demand_distribution %}
 			{% if selected_demand_distribution %}
 			<td>{{selected_demand_distribution.expert.email}}</td>
 			{% endif %}

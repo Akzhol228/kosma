@@ -18,4 +18,6 @@ urlpatterns = [
     path('<str:room>/message/list', views.MessageListView.as_view(), name='message_list'),
     path('demand_distribution/delete/<int:pk>', views.DemandDistributionDeleteView.as_view(),
          name='demand_distribution_delete'),
+    path('demand_completed_file/create/<int:pk>', views.CompletedFileCreateView.as_view(), name='demand_completed_file_create'),
+    path('demand_completed_file/delete/<int:pk>', views.CompletedFileDeleteView.as_view(), name='demand_completed_file_delete'),
 ]

@@ -7,7 +7,7 @@ from actions.utils import create_action
 
 @receiver(post_save, sender=Demand)
 def create_demand(sender, instance, created, **kwargs):
-    if instance.is_distribution:
+    if instance.is_distribution and created:
         portfolios = Portfolio.objects.filter(type_tasks=instance.type_task).all()
         for portfolio in portfolios:
             demand_distribution = DemandDistribution.objects.create(
