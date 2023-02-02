@@ -162,22 +162,22 @@
 				<ul class="navbar-nav navbar-nav-scroll mx-auto">
 					<!-- Nav item 1 Demos -->
 					<li class="nav-item lg-block">
-						<a class="btn btn-primary w-100" href="#">Обратный звонок</a>
+						<a class="btn btn-primary w-100" href="#">{% trans "Обратный звонок" %}</a>
 					</li>
 					<li class="nav-item ">
-						<a class="nav-link" href="#home" >Главная страница</a>
+						<a class="nav-link" href="#home" >{% trans "Главная страница" %}</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link" href="#services" >Наши услуги</a>
+						<a class="nav-link" href="#services" >{% trans "Наши услуги" %}</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link" href="#reviews">Отзывы</a>
+						<a class="nav-link" href="#reviews">{% trans "Отзывы" %}</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link" href="#o_nas" >О проекте</a>
+						<a class="nav-link" href="#o_nas" >{% trans "О проекте" %}</a>
 					</li>
 					<li class="nav-item dropdown lg-block">
-						<a class="nav-link dropdown-toggle" href="#" id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-globe me-2"></i> ЯЗЫК</a>
+						<a class="nav-link dropdown-toggle" href="#" id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-globe me-2"></i> {% trans "ЯЗЫК" %}</a>
 						<ul class="dropdown-menu" aria-labelledby="demoMenu">
 							<li>
 								<a class="dropdown-item me-4" href="index-2.html#">
@@ -345,7 +345,8 @@ Main Banner START -->
 				</h1>
 				
 				<!-- Content -->
-				<p class="my-4 lead">Здесь эксперты помогают и консультируют по учёбе без посредников</p>
+				<p class="my-4 lead">{% trans "Здесь эксперты помогают и консультируют по учёбе без посредников" %}
+				</p>
 				
 				
 
@@ -356,22 +357,22 @@ Main Banner START -->
 						{% if request.user.role == 1 %}
 							<a href="{% url 'student_dashboard:demand_list' %}"
 							   class="btn btn-lg btn-danger-soft me-2 mb-4 mb-sm-0">
-								Перейти в личный кабинет студента
+								{% trans "Перейти в личный кабинет студента " %}
 							</a>
 						{% elif request.user.role == 2 %}
 							<a href="{% url 'expert_dashboard:new_task_list' %}"
 							   class="btn btn-lg btn-danger-soft me-2 mb-4 mb-sm-0">
-								Перейти в личный кабинет эксперта
+								{% trans "Перейти в личный кабинет эксперта" %}
 							</a>
 						{% endif %}
 					{% else %}
 						<a data-modal-url="{% url 'task_management:demand_register_create' %}"
 						   data-modal-title="Заполните форму и узнайте цену"
 						   class="btn btn-lg btn-danger-soft me-2 mb-4 mb-sm-0 open-universal-modal">
-							Разместить задание
+							{% trans "Разместить задание" %}
 						</a>
 						<a href="{% url 'expert_register' %}" class="btn btn-lg btn-primary  me-2 mb-4 mb-sm-0">
-			               Стать экспертом
+			               {% trans "Стать экспертом" %}
 			            </a>
 					{% endif %}
 					<!-- Video button -->
@@ -422,7 +423,7 @@ Counter START -->
 							<h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="200" data-purecounter-delay="200">0</h5>
 							<span class="mb-0 h5">+</span>
 						</div>
-						<p class="mb-0">эксперт</p>
+						<p class="mb-0">{% trans "Эксперт" %}</p>
 					</div>
 				</div>
 			</div>
@@ -435,7 +436,7 @@ Counter START -->
 							<h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="60"	data-purecounter-delay="200">0</h5>
 							<span class="mb-0 h5">K+</span>
 						</div>
-						<p class="mb-0">Cтудента</p>
+						<p class="mb-0">{% trans " Cтудента" %}</p>
 					</div>
 				</div>
 			</div>
@@ -448,7 +449,7 @@ Counter START -->
 							<h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0" data-purecounter-end="6" data-purecounter-delay="300">0</h5>
 							<span class="mb-0 h5">K+</span>
 						</div>
-						<p class="mb-0">заданий и консультаций</p>
+						<p class="mb-0">{% trans " Заданий и консультаций" %}</p>
 					</div>
 				</div>
 			</div>
@@ -514,8 +515,8 @@ Counter END -->
 
 			<div class="col-lg-6 mt-5 mt-lg-0">
 				<!-- Title -->
-				<h2 class="mb-3">Разместите задание, а мы подберём эксперта</h2>
-				<p class="mb-3 mb-lg-4">Сайт бесплатно разошлёт задание экспертам.А эксперты предложат цены. Это удобнее, чем искать кого-то в Интернете</p>
+				<h2 class="mb-3">{% trans "Разместите задание, а мы подберём эксперта" %}</h2>
+				<p class="mb-3 mb-lg-4">{% trans "Сайт бесплатно разошлёт задание экспертам.А эксперты предложат цены. Это удобнее, чем искать кого-то в Интернете" %}</p>
 				<!-- Content -->
 				<div class="row g-4">
 					<!-- Item -->
@@ -525,7 +526,7 @@ Counter END -->
 								1
 							</div>
 							<div class="w-90 ms-0 ms-sm-3 mt-2 mt-sm-0">
-								<h6 class="mb-0">Тысячи отзывов о нашей работе</h6>
+								<h6 class="mb-0">{% trans "Тысячи отзывов о нашей работе" %}</h6>
 								<div class="small">
 									<ul class="list-inline mb-0">
 									<li class="list-inline-item me-0 small"><i class="fas fa-star text-warning"></i></li>
@@ -533,7 +534,7 @@ Counter END -->
 									<li class="list-inline-item me-0 small"><i class="fas fa-star text-warning"></i></li>
 									<li class="list-inline-item me-0 small"><i class="fas fa-star text-warning"></i></li>
 									<li class="list-inline-item me-0 small"><i class="far fa-star text-warning"></i></li>
-								</ul>	553 969 оценок среднее 4,9 из 5
+								</ul>	{% trans "553 969 оценок среднее 4,9 из 5" %}
 								</div>
 							</div>
 						</div>
@@ -544,9 +545,9 @@ Counter END -->
 								2
 							</div>
 							<div class="w-90  ms-0 ms-sm-3 mt-2 mt-sm-0">
-								<h6 class="mb-0">Отклик экспертов с первых мину</h6>
+								<h6 class="mb-0">{% trans "Отклик экспертов с первых мину" %}</h6>
 								<div class="small">
-									С нами работают более 15 000 проверенных экспертов с высшим образованием. Вы можете выбрать исполнителя уже через 15 минут после публикации заказа. Срок исполнения — от 1 часа
+									{% trans "С нами работают более 15 000 проверенных экспертов с высшим образованием. Вы можете выбрать исполнителя уже через 15 минут после публикации заказа. Срок исполнения — от 1 часа" %}
 								</div>
 							</div>
 						</div>
@@ -557,9 +558,9 @@ Counter END -->
 								3
 							</div>
 							<div class="w-90  ms-0 ms-sm-3 mt-2 mt-sm-0">
-								<h6 class="mb-0">Цены ниже в 2-3 раза</h6>
+								<h6 class="mb-0">{% trans "Цены ниже в 2-3 раза" %}</h6>
 								<div class="small">
-									Вы работаете с экспертами напрямую, поэтому цены ниже, чем в агентствах
+									{% trans "Вы работаете с экспертами напрямую, поэтому цены ниже, чем в агентствах" %}
 								</div>
 							</div>
 						</div>
@@ -570,9 +571,9 @@ Counter END -->
 								4
 							</div>
 							<div class="w-90  ms-0 ms-sm-3 mt-2 mt-sm-0">
-								<h6 class="mb-0">Доработки и консультации– бесплатны</h6>
+								<h6 class="mb-0">{% trans "Доработки и консультации– бесплатны" %}</h6>
 								<div class="small">
-									Доработки и консультации в рамках задания бесплатны и выполняются в максимально короткие сроки
+									{% trans "Доработки и консультации в рамках задания бесплатны и выполняются в максимально короткие сроки" %}
 								</div>
 							</div>
 						</div>
@@ -583,9 +584,9 @@ Counter END -->
 								5
 							</div>
 							<div class="w-90  ms-0 ms-sm-3 mt-2 mt-sm-0">
-								<h6 class="mb-0">Гарантия возврата денег</h6>
+								<h6 class="mb-0">{% trans "Гарантия возврата денег" %}</h6>
 								<div class="small">
-									Если эксперт не справится — мы вернем 100% стоимости
+									{% trans "Если эксперт не справится — мы вернем 100% стоимости" %}
 								</div>
 							</div>
 						</div>
@@ -667,8 +668,8 @@ Counter END -->
 		<!-- Title -->
 		<div class="row">
 			<div class="col-lg-8 mb-4">
-				<h2>Цены ниже – качество выше!</h2>
-				<p class="mb-0">Работайте с проверенными экспертами без посредников</p>
+				<h2>{% trans "Цены ниже – качество выше!" %}</h2>
+				<p class="mb-0">{% trans "Работайте с проверенными экспертами без посредников" %}</p>
 			</div>
 		</div>
 		<div class="row g-4 ">
@@ -685,8 +686,8 @@ Counter END -->
 								</svg>
 							</div>
 							<div class="ms-3">
-								<span class="stretched-link span-price d-block">Курсовая работа</span>
-								<span>Цена — от <span class="text-green">450 грн</span></span>
+								<span class="stretched-link span-price d-block">{% trans "Курсовая работа" %}</span>
+								<span>{% trans "Цена — от " %}<span class="text-green">450 тг</span></span>
 							</div>
 						</div>
 					</div>
@@ -704,8 +705,8 @@ Counter END -->
 								</svg>
 							</div>
 							<div class="ms-3">
-								<span class="stretched-link span-price d-block">Дипломная работа</span>
-								<span>Цена — от <span class="text-green">450 грн</span></span>
+								<span class="stretched-link span-price d-block">{% trans "Дипломная работа" %}</span>
+								<span>{% trans "Цена — от " %}<span class="text-green">450 грн</span></span>
 							</div>
 						</div>
 					</div>
@@ -723,8 +724,8 @@ Counter END -->
 								</svg>
 							</div>
 							<div class="ms-3">
-								<span class="stretched-link span-price d-block">Реферат</span>
-								<span>Цена — от <span class="text-green">450 грн</span></span>
+								<span class="stretched-link span-price d-block">{% trans "Реферат" %}</span>
+								<span>{% trans "Цена — от " %}<span class="text-green">450 грн</span></span>
 							</div>
 						</div>
 					</div>
@@ -742,8 +743,8 @@ Counter END -->
 								</svg>
 							</div>
 							<div class="ms-3">
-								<span class="stretched-link span-price d-block">Контрольная работа</span>
-								<span>Цена — от <span class="text-green">450 грн</span></span>
+								<span class="stretched-link span-price d-block">{% trans "Контрольная работа " %}</span>
+								<span>{% trans "Цена — от " %} <span class="text-green">450 грн</span></span>
 							</div>
 						</div>
 					</div>
@@ -761,8 +762,8 @@ Counter END -->
 								</svg>
 							</div>
 							<div class="ms-3">
-								<span class="stretched-link span-price d-block">Домашнее задание</span>
-								<span>Цена — от <span class="text-green">450 грн</span></span>
+								<span class="stretched-link span-price d-block">{% trans "Домашнее задание " %}</span>
+								<span>{% trans "Цена — от  " %}<span class="text-green">450 грн</span></span>
 							</div>
 						</div>
 					</div>
@@ -780,8 +781,8 @@ Counter END -->
 								</svg>
 							</div>
 							<div class="ms-3">
-								<span class="stretched-link span-price d-block">Отчет по практике</span>
-								<span>Цена — от <span class="text-green">450 грн</span></span>
+								<span class="stretched-link span-price d-block">{% trans "Отчет по практике" %}</span>
+								<span>{% trans "Цена — от " %}<span class="text-green">450 грн</span></span>
 							</div>
 						</div>
 					</div>
@@ -799,8 +800,8 @@ Counter END -->
 								</svg>
 							</div>
 							<div class="ms-3">
-								<span class="stretched-link span-price d-block">Домашнее задание</span>
-								<span>Цена — от <span class="text-green">450 грн</span></span>
+								<span class="stretched-link span-price d-block">{% trans "Домашнее задание" %}</span>
+								<span>{% trans "Цена — от" %} <span class="text-green">450 грн</span></span>
 							</div>
 						</div>
 					</div>
@@ -818,8 +819,8 @@ Counter END -->
 								</svg>
 							</div>
 							<div class="ms-3">
-								<span class="stretched-link span-price d-block">Статья</span>
-								<span>Цена — от <span class="text-green">450 грн</span></span>
+								<span class="stretched-link span-price d-block">{% trans "Статья" %}</span>
+								<span>{% trans "Цена — от" %} <span class="text-green">450 грн</span></span>
 							</div>
 						</div>
 					</div>
@@ -885,7 +886,7 @@ Counter END -->
 		<div class="row">
 			<!-- Title -->
 			<div class="col-md-12 ">
-				<h2 class="text-center mt-45-mobile"> Как мы помагаем</h2>
+				<h2 class="text-center mt-45-mobile"> {% trans "Как мы помагаем" %}</h2>
 			</div>
 			<!-- Content and button -->
 			
@@ -929,7 +930,7 @@ Counter END -->
 						</svg>
 					</div>
 					<!-- Title -->
-					<p class="text-truncate-2 pb-0">Разместите заказ и получите предложения с ценами экспертов.</p>
+					<p class="text-truncate-2 pb-0">{% trans "Разместите заказ и получите предложения с ценами экспертов." %}</p>
 				</div>	
 			</div>
 
@@ -968,7 +969,7 @@ Counter END -->
 						    </g>
 						</svg>
 					</div>
-					<p class="text-truncate-2 pb-0">Выберите эксперта по цене и отзывам</p>
+					<p class="text-truncate-2 pb-0">{% trans "Выберите эксперта по цене и отзывам" %}</p>
 				</div>
 			</div>
 
@@ -1001,7 +1002,7 @@ Counter END -->
 						    </g>
 						</svg>
 					</div>
-					<p class="text-truncate-2 pb-0">Получите положительную оценку, оплатите работу и оставьте отзыв эксперту</p>
+					<p class="text-truncate-2 pb-0">{% trans "Получите положительную оценку, оплатите работу и оставьте отзыв эксперту " %}</p>
 				</div>	
 			</div>
 
@@ -1021,8 +1022,8 @@ Counter END -->
 		<div class="row g-4">
 			<!-- Title -->
 			<div class="col-sm-12 col-lg-12 text-center mb-3">
-				<h2>Наши гарантии</h2>
-				<p class="mb-0">Эксперт получил деньги за заказ, а работу не выполнил?Только не у нас!.</p>
+				<h2>{% trans "Наши гарантии" %}</h2>
+				<p class="mb-0">{% trans "Эксперт получил деньги за заказ, а работу не выполнил?Только не у нас!." %}</p>
 			</div>
 			<!-- Feature item -->
 			<div class="col-sm-6 col-lg-4">
@@ -1032,8 +1033,8 @@ Counter END -->
 						<img src="{% static 'assets/main/garanti.png' %}" class="fill-primary" width="63.28px" height="47.41px">
 						
 					</figure>
-					<h5>Гарантия качества</h5>
-					<p class="mb-0">Мы гарантируем получение 100% качественного результата</p>
+					<h5>{% trans "Гарантия качества" %}</h5>
+					<p class="mb-0">{% trans "Мы гарантируем получение 100% качественного результата" %}</p>
 				</div>
 			</div>
 
@@ -1045,8 +1046,8 @@ Counter END -->
 						<img src="{% static 'assets/main/sena-nis.png' %}" class="fill-orange" width="54.22px" height="58.19px" viewBox="0 0 54.22 58.19" >
 						
 					</figure>
-					<h5>Низкие цены</h5>
-					<p class="mb-0">Находите профессиональных консультантов, соответствующих вашему бюджету</p>
+					<h5>{% trans "Низкие цены" %}</h5>
+					<p class="mb-0">{% trans "Находите профессиональных консультантов, соответствующих вашему бюджету" %}</p>
 				</div>
 			</div>
 
@@ -1058,8 +1059,8 @@ Counter END -->
 						<img src="{% static 'assets/main/garanti-sen.png' %}" class="fill-purple" width="54.22px" height="52.86px" viewBox="0 0 54.22 52.86">
 						
 					</figure>
-					<h5>Гарантия возврата денег</h5>
-					<p class="mb-0">В случае, если что-то пойдет не так, мы гарантируем возврат полной уплаченной суммы</p>
+					<h5>{% trans "Гарантия возврата денег" %}</h5>
+					<p class="mb-0">{% trans "В случае, если что-то пойдет не так, мы гарантируем возврат полной уплаченной суммы" %}</p>
 				</div>
 			</div>
 
@@ -1070,8 +1071,8 @@ Counter END -->
 						<figure>
 							<img src="{% static 'assets/main/consultanti.png' %}" class="fill-orange" width="54.22px" height="58.19px" viewBox="0 0 54.22 58.19">
 						</figure>
-					<h5>Проверенные консультанты</h5>
-					<p class="mb-0">У нас работают только настоящие профессионалы, прошедшие проверку и тестирование</p>
+					<h5>{% trans "Проверенные консультанты" %}</h5>
+					<p class="mb-0">{% trans "У нас работают только настоящие профессионалы, прошедшие проверку и тестирование" %}</p>
 				</div>
 			</div>
 
@@ -1082,8 +1083,8 @@ Counter END -->
 						<figure>
 							<img src="{% static 'assets/main/con-setting.png' %}" class="fill-warning" width="60.77px" height="52.15px" viewBox="0 0 60.77 52.15" >
 						</figure>
-					<h5>Доработки и консультации</h5>
-					<p class="mb-0">Доработки и консультации бесплатны, и предоставляются в максимально короткие сроки</p>
+					<h5>{% trans "Доработки и консультации" %}</h5>
+					<p class="mb-0">{% trans "Доработки и консультации бесплатны, и предоставляются в максимально короткие сроки" %}</p>
 				</div>
 			</div>
 
@@ -1099,7 +1100,7 @@ Reviews START -->
 		<!-- Title -->
 		<div class="row mb-4">
 			<div class="col-lg-8 mx-auto text-center">
-				<h2>Отзывы наших клиентов</h2>
+				<h2>{% trans "Отзывы наших клиентов" %}</h2>
 				
 			</div>
 		</div>
@@ -1112,73 +1113,41 @@ Reviews START -->
 					<div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
 						<div class="bg-body text-center p-4 rounded-3 border border-1 position-relative">
 							<!-- Avatar -->
-							<div class="avatar avatar-lg mb-3">
-								<img class="avatar-img rounded-circle" src="{% static 'assets/images/avatar/07.jpg' %}" alt="avatar">
+							<div class=" mb-3">
+								<img class="avatar-img" style="height: 250px" src="{% static 'assets/images/WhatsApp.jpeg' %}" alt="avatar">
 							</div>
 							<!-- Title -->
-							<h6 class="mb-2">Billy Vasquez</h6>
-							<!-- Content -->
-							<blockquote class="mt-1">
-								<p>
-									<span class="me-1 small"><i class="fas fa-quote-left"></i></span>
-									Its enjoyment	Moonlight newspaper up agreeable depending. Timed voice share led him to widen. At weddings believed laughing
-									<span class="ms-1 small"><i class="fas fa-quote-right"></i></span>
-								</p>
-							</blockquote>
+							<h6 class="mb-2">Carolyn Ortiz</h6>
 						</div>
 					</div>
 					<div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
 						<div class="bg-body text-center p-4 rounded-3 border border-1 position-relative">
 							<!-- Avatar -->
-							<div class="avatar avatar-lg mb-3">
-								<img class="avatar-img rounded-circle" src="{% static 'assets/images/avatar/07.jpg' %}" alt="avatar">
+							<div class=" mb-3">
+								<img class="avatar-img" style="height: 250px" src="{% static 'assets/images/WhatsApp.jpeg' %}" alt="avatar">
 							</div>
 							<!-- Title -->
 							<h6 class="mb-2">Carolyn Ortiz</h6>
-							<!-- Content -->
-							<blockquote class="mt-1">
-								<p>
-									<span class="me-1 small"><i class="fas fa-quote-left"></i></span>
-										Newspaper up its enjoyment agreeable depending. Timed voice share led him to widen. At weddings believed laughing
-									<span class="ms-1 small"><i class="fas fa-quote-right"></i></span>
-								</p>
-							</blockquote>
 						</div>
 					</div>
 					<div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
 						<div class="bg-body text-center p-4 rounded-3 border border-1 position-relative">
 							<!-- Avatar -->
-							<div class="avatar avatar-lg mb-3">
-								<img class="avatar-img rounded-circle" src="{% static 'assets/images/avatar/07.jpg' %}" alt="avatar">
+							<div class=" mb-3">
+								<img class="avatar-img" style="height: 250px" src="{% static 'assets/images/WhatsApp.jpeg' %}" alt="avatar">
 							</div>
 							<!-- Title -->
 							<h6 class="mb-2">Carolyn Ortiz</h6>
-							<!-- Content -->
-							<blockquote class="mt-1">
-								<p>
-									<span class="me-1 small"><i class="fas fa-quote-left"></i></span>
-										Newspaper up its enjoyment agreeable depending. Timed voice share led him to widen. At weddings believed laughing
-									<span class="ms-1 small"><i class="fas fa-quote-right"></i></span>
-								</p>
-							</blockquote>
 						</div>
 					</div>
 					<div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
 						<div class="bg-body text-center p-4 rounded-3 border border-1 position-relative">
 							<!-- Avatar -->
-							<div class="avatar avatar-lg mb-3">
-								<img class="avatar-img rounded-circle" src="{% static 'assets/images/avatar/07.jpg' %}" alt="avatar">
+							<div class=" mb-3">
+								<img class="avatar-img" style="height: 250px" src="{% static 'assets/images/WhatsApp.jpeg' %}" alt="avatar">
 							</div>
 							<!-- Title -->
 							<h6 class="mb-2">Carolyn Ortiz</h6>
-							<!-- Content -->
-							<blockquote class="mt-1">
-								<p>
-									<span class="me-1 small"><i class="fas fa-quote-left"></i></span>
-										Newspaper up its enjoyment agreeable depending. Timed voice share led him to widen. At weddings believed laughing
-									<span class="ms-1 small"><i class="fas fa-quote-right"></i></span>
-								</p>
-							</blockquote>
 						</div>
 					</div>
 
@@ -1201,7 +1170,7 @@ Reviews END -->
 		<div class="row mb-4">
 			<div class="col-12">
 				<h2 class="fs-1 fw-bold">
-					<span class="position-relative z-index-9">О портале Эдупорт</span>
+					<span class="position-relative z-index-9">{% trans "О портале" %}Эдупорт</span>
 					<span class="position-relative z-index-1">
 						<!-- SVG START -->
 						<span class="position-absolute top-50 start-50 translate-middle z-index-n1">
@@ -1212,7 +1181,7 @@ Reviews END -->
 						<!-- SVG END -->
 					</span>
 				</h2>
-				<p class="mb-0">«Эдупорт» – это безопасный онлайн-сервис помощи студентам. Здесь заказчики напрямую обращаются за помощью к экспертам, а сайт предоставляет гарантию на оказанные услуги.</p>
+				<p class="mb-0">«Эдупорт»{% trans " – это безопасный онлайн-сервис помощи студентам. Здесь заказчики напрямую обращаются за помощью к экспертам, а сайт предоставляет гарантию на оказанные услуги." %}</p>
 			</div>
 		</div>
 	 
@@ -1220,15 +1189,15 @@ Reviews END -->
 		<ul class="nav nav-pills nav-pill-soft mb-3" id="course-pills-tab" role="tablist">
 			<!-- Tab item -->
 			<li class="nav-item me-2 me-sm-5" role="presentation">
-				<button class="nav-link active" id="course-pills-tab-1" data-bs-toggle="pill" data-bs-target="#course-pills-tab1" type="button" role="tab" aria-controls="course-pills-tab1" aria-selected="true"> О проекте</button>
+				<button class="nav-link active" id="course-pills-tab-1" data-bs-toggle="pill" data-bs-target="#course-pills-tab1" type="button" role="tab" aria-controls="course-pills-tab1" aria-selected="true"> {% trans "О проекте" %}</button>
 			</li>
 			<!-- Tab item -->
 			<li class="nav-item me-2 me-sm-5" role="presentation">
-				<button class="nav-link" id="course-pills-tab-2" data-bs-toggle="pill" data-bs-target="#course-pills-tab2" type="button" role="tab" aria-controls="course-pills-tab2" aria-selected="false" tabindex="-1">Безопасная сделка</button>
+				<button class="nav-link" id="course-pills-tab-2" data-bs-toggle="pill" data-bs-target="#course-pills-tab2" type="button" role="tab" aria-controls="course-pills-tab2" aria-selected="false" tabindex="-1">{% trans "Безопасная сделка" %}</button>
 			</li>
 			<!-- Tab item -->
 			<li class="nav-item me-2 me-sm-5" role="presentation">
-				<button class="nav-link" id="course-pills-tab-3" data-bs-toggle="pill" data-bs-target="#course-pills-tab3" type="button" role="tab" aria-controls="course-pills-tab3" aria-selected="false" tabindex="-1">Контакты</button>
+				<button class="nav-link" id="course-pills-tab-3" data-bs-toggle="pill" data-bs-target="#course-pills-tab3" type="button" role="tab" aria-controls="course-pills-tab3" aria-selected="false" tabindex="-1">{% trans "Контакты" %}</button>
 			</li>
 			<!-- Tab item -->
 		</ul> 
@@ -1245,7 +1214,7 @@ Reviews END -->
 
 							<!-- Left content START -->
 							<div class="col-lg-12">
-								<h5 class="mb-3">Что даёт студентам сайт «Eduport»?</h5 class="mb-2">
+								<h5 class="mb-3">{% trans "Что даёт студентам сайт " %}«Eduport»?</h5 class="mb-2">
 								<ul class="list-inline vstack gap-4 flex-wrap mb-4">
 								<!-- Item -->
 								<li class="list-inline-item d-sm-flex">
@@ -1253,8 +1222,8 @@ Reviews END -->
 										<i class="fas fa-check"></i>
 									</div>
 									<div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
-										<h6 class="mb-0">Быстрый поиск помощника</h6>
-										<p class="mb-0">За 59 секунд система разошлёт задание экспертам, а они предложат цены.</p>
+										<h6 class="mb-0">{% trans "Быстрый поиск помощника" %}</h6>
+										<p class="mb-0">{% trans "За 59 секунд система разошлёт задание экспертам, а они предложат цены." %}</p>
 									</div>
 								</li>
 								<!-- Item -->
@@ -1263,8 +1232,8 @@ Reviews END -->
 										<i class="fas fa-check"></i>
 									</div>
 									<div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
-										<h6 class="mb-0">Общение с экспертом напрямую</h6>
-										<p class="mb-0">Эксперты предлагают цены, а вы выбираете подходящего (по рейтингу, отзывам, стоимости).</p>
+										<h6 class="mb-0">{% trans "Общение с экспертом напрямую" %}</h6>
+										<p class="mb-0">{% trans "Эксперты предлагают цены, а вы выбираете подходящего (по рейтингу, отзывам, стоимости)." %}</p>
 									</div>
 								</li>
 								<!-- Item -->
@@ -1273,8 +1242,8 @@ Reviews END -->
 										<i class="fas fa-check"></i>
 									</div>
 									<div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
-										<h6 class="mb-0"> Цены в 2-3 раза ниже, чем у посредников</h6>
-										<p class="mb-0">Общаясь с экспертом напрямую, экономите не только время, но и деньги.</p>
+										<h6 class="mb-0"> {% trans "Цены в 2-3 раза ниже, чем у посредников" %}</h6>
+										<p class="mb-0">{% trans "Общаясь с экспертом напрямую, экономите не только время, но и деньги." %}</p>
 									</div>
 								</li>
 
@@ -1283,8 +1252,8 @@ Reviews END -->
 										<i class="fas fa-check"></i>
 									</div>
 									<div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
-										<h6 class="mb-0"> Гарантия возврата</h6>
-										<p class="mb-0">Если эксперт не справится - вернём 100% суммы.</p>
+										<h6 class="mb-0"> {% trans "Гарантия возврата" %}</h6>
+										<p class="mb-0">{% trans "Если эксперт не справится - вернём 100% суммы." %}</p>
 									</div>
 								</li>
 							</ul>
@@ -1303,13 +1272,13 @@ Reviews END -->
 					<!-- Left content START -->
 					<div class="col-lg-12">
 						<!-- Title -->
-						<h3>Безопасная сделка</h3>
-						<p class="mb-3">«Eduport» — это современный автоматизированный сервис. Он устроен так, что гарантирует полную безопасность сделок по заказам.</p>
-						<h5 class="mt-4">Схема работы сервиса:</h5>
+						<h3>{% trans "Безопасная сделка" %}</h3>
+						<p class="mb-3">«Eduport» — {% trans "это современный автоматизированный сервис. Он устроен так, что гарантирует полную безопасность сделок по заказам." %}</p>
+						<h5 class="mt-4">{% trans "Схема работы сервиса:" %}</h5>
 						<ul class="list-group list-group-borderless mb-3">
-							<li class="list-group-item h6 fw-light d-flex mb-0">1) Заказчик размещает заказ. Система оповещает экспертов.</li>
-							<li class="list-group-item h6 fw-light d-flex mb-0">2) Эксперты предлагают цены за услуги для студентов.Заказчик может выбрать любого эксперта.</li>
-							<li class="list-group-item h6 fw-light d-flex mb-0">3) После того, как заказчик определится с выбором эксперта, он вносит предоплату.</li>
+							<li class="list-group-item h6 fw-light d-flex mb-0">{% trans "1) Заказчик размещает заказ. Система оповещает экспертов." %}</li>
+							<li class="list-group-item h6 fw-light d-flex mb-0">{% trans "2) Эксперты предлагают цены за услуги для студентов.Заказчик может выбрать любого эксперта." %}</li>
+							<li class="list-group-item h6 fw-light d-flex mb-0">{% trans "3) После того, как заказчик определится с выбором эксперта, он вносит предоплату." %}</li>
 							
 						</ul>
 					</div>
@@ -1324,8 +1293,8 @@ Reviews END -->
 					<!-- Left content START -->
 					<div class="col-lg-6">
 						<!-- Title -->
-						<h3>Контакты</h3>
-						<p class="mb-3">Если вам необходима помощь или консультация по работе «Eduport», или вы хотите поделиться своими идеями, замечаниями, то смело пишите нам мы на связи 7 дней в неделю!</p>
+						<h3>{% trans "Контакты" %}</h3>
+						<p class="mb-3">{% trans "Если вам необходима помощь или консультация по работе «Eduport», или вы хотите поделиться своими идеями, замечаниями, то смело пишите нам мы на связи 7 дней в неделю!" %}</p>
 
 
 					</div>
@@ -1341,7 +1310,7 @@ Reviews END -->
 									<div class="icon-lg bg-warning text-white rounded-circle position-absolute top-0 start-100 translate-middle ms-n6">
 										<i class="fas fa-envelope"></i>
 									</div>
-									<h6>Email</h6>
+									<h6>{% trans "Email" %}</h6>
 									<p class="mb-0"><a href="#" class="h6 mb-0 fw-light stretched-link">example@gmail.com</a></p>
 								</div>
 							</div>
@@ -1352,7 +1321,7 @@ Reviews END -->
 									<div class="icon-lg bg-success text-white rounded-circle position-absolute top-0 start-100 translate-middle ms-n6">
 										<i class="bi bi-whatsapp"></i>
 									</div>
-									<h6>Номер WhatsApp</h6>
+									<h6>{% trans "Номер WhatsApp" %}</h6>
 									<p class="mb-0"><a href="#" class="h6 mb-0 fw-light stretched-link">+256 359 556</a></p>
 								</div>
 							</div>
@@ -1363,7 +1332,7 @@ Reviews END -->
 									<div class="icon-lg bg-purple text-white rounded-circle position-absolute top-0 start-100 translate-middle ms-n6">
 										<i class="fas fa-tty"></i>
 									</div>
-									<h6>Телефон</h6>
+									<h6>{% trans "Телефон" %}</h6>
 									<p class="mb-0"><a href="#" class="h6 mb-0 fw-light stretched-link">+123 456 789</a></p>
 								</div>
 							</div>
@@ -1374,7 +1343,7 @@ Reviews END -->
 									<div class="icon-lg bg-orange text-white rounded-circle position-absolute top-0 start-100 translate-middle ms-n6">
 										<i class="fas fa-globe"></i>
 									</div>
-									<h6>Веб-сайт</h6>
+									<h6>{% trans "Веб-сайт" %}</h6>
 									<p class="mb-0"><a href="#" class="h6 mb-0 fw-light stretched-link">http://example.com</a></p>
 								</div>
 							</div>
@@ -1403,9 +1372,9 @@ Reviews END -->
 					<!-- Content -->
 					<div class="row">
 						<div class="col-sm-8 position-relative">
-							<h3 class="mb-1">Для заказчиков</h3>
-							<p class="mb-3 h5 fw-light lead">Теперь вы знаете про «Всё сдал!».Выбор за вами. Разместите задание и проверьте, как всё работает.Это быстро и бесплатно.</p>
-							<a href="#" class="btn btn-primary mb-0">Разместить задание</a>
+							<h3 class="mb-1">{% trans "Для заказчиков" %}</h3>
+							<p class="mb-3 h5 fw-light lead">{% trans "Теперь вы знаете про «Всё сдал!».Выбор за вами. Разместите задание и проверьте, как всё работает.Это быстро и бесплатно." %}</p>
+							<a href="#" class="btn btn-primary mb-0">{% trans "Разместить задание" %}</a>
 						</div>
 					</div>
 				</div>
@@ -1421,9 +1390,9 @@ Reviews END -->
 					<!-- Content -->
 					<div class="row">
 						<div class="col-sm-8 position-relative">
-							<h3 class="mb-1">Для экспертов</h3>
-							<p class="mb-3 h5 fw-light lead">Вы предлагаете цены, а мы выплачиваем 100% вашего заработка.Никаких посредников. Оказывайте помощь студентам и зарабатывайте!</p>
-							<a href="#" class="btn btn-warning mb-0">Стать экспертом</a>
+							<h3 class="mb-1">{% trans "Для экспертов" %}</h3>
+							<p class="mb-3 h5 fw-light lead">{% trans "Вы предлагаете цены, а мы выплачиваем 100% вашего заработка.Никаких посредников. Оказывайте помощь студентам и зарабатывайте!" %}</p>
+							<a href="#" class="btn btn-warning mb-0">{% trans "Стать экспертом" %}</a>
 						</div>
 					</div>
 				</div>
@@ -1452,7 +1421,7 @@ Footer START -->
 			<div class="col-lg-6 mx-auto text-center my-5">
 				<!-- Logo -->
 				<img class="mx-auto h-40px" src="{% static 'assets/images/logo-light.svg' %}" alt="logo">
-				<p class="mt-3 text-white">Eduport безопасный онлайн-сервис с проверенными экспертами. Эксперты сайта Eduport проводят работу по подбору, обработке и структурированию материала по предложенной заказчиком теме. Результат данной работы не является готовым научным трудом, но может служить источником для его написания.</p>
+				<p class="mt-3 text-white">Eduport {% trans "безопасный онлайн-сервис с проверенными экспертами. Эксперты сайта Eduport проводят работу по подбору, обработке и структурированию материала по предложенной заказчиком теме. Результат данной работы не является готовым научным трудом, но может служить источником для его написания." %}</p>
 				<!-- Links -->
 				<!-- Social media button -->
 				<ul class="list-inline mt-3 mb-0">
@@ -1478,7 +1447,7 @@ Footer START -->
 					</li>
 				</ul>
 				<!-- Bottom footer link -->
-				<div class="mt-3 text-white">©2021 <a href="https://www.webestica.com/" class="text-reset btn-link text-primary-hover" target="_blank">Eduport</a>. Все права защищены. </div>
+				<div class="mt-3 text-white">©2021 <a href="https://www.webestica.com/" class="text-reset btn-link text-primary-hover" target="_blank">Eduport</a>. {% trans "Все права защищены. " %}</div>
 			</div>
 		</div>
 	</div>
@@ -1502,12 +1471,13 @@ Footer END -->
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
   integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
   crossorigin="anonymous"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
 <script src="{% static 'assets/js/ajax_custom.js' %}"></script>
 <script src="{% static 'assets/js/form_set.js' %}"></script>
 <script src="{% static 'assets/js/selectize.js' %}"></script>
 
 <script>
-
+	
 </script>
 </body>
 </html>

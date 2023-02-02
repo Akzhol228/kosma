@@ -8,7 +8,7 @@
         <div class="card-body">
           <div class="d-flex flex-column align-items-center text-center">
             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-            <a href="{% url 'student_dashboard:student_profile_edit' %}">изменить профиль</a>
+            <!-- <a href="{% url 'student_dashboard:student_profile_edit' %}">изменить профиль</a> -->
           </div>
         </div>
       </div>
@@ -36,22 +36,34 @@
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Номер</h6>
+              <h6 class="mb-0">Роль</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{request.user.phone_number}}
+              {% if request.user.role == 2 %}
+              Эксперт
+              {% elif request.user.role == 1 %}
+              Студент
+              {% endif %}
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Роль</h6>
+              <h6 class="mb-0">Логин</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{request.user.role}}
+              {{request.user.username}}
             </div>
           </div>
           <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Пароль</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{request.user.password}}
+            </div>
+          </div>
           
         </div>
       </div>
