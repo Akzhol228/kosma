@@ -1,6 +1,6 @@
 
 {% load static %}
-{% load i18n %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,25 +59,22 @@
 						<a href="{% url 'main:MainView'%}" class="nav-link">Главная страница</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-globe me-2"></i>
-                            Язык
-                        </a>
-                        
-						{% get_current_language as LANGUAGE_CODE %}
-						{% get_available_languages as LANGUAGES %}
-						{% get_language_info_list for LANGUAGES as languages %}
-
+						<a class="nav-link dropdown-toggle" href="#" id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-globe me-2"></i> Язык</a>
 						<ul class="dropdown-menu" aria-labelledby="demoMenu">
-							{% for language in languages %}
-								<li>
-									<a class="dropdown-item me-4 {% if language.code == LANGUAGE_CODE %} selected{% endif %}"
-									   href="/{{ language.code }}{{ request.path|cut:'/kk'|cut:'/ru' }}">
-										{{ language.name_local }}
-									</a>
-								</li>
-							{% endfor %}
+							<li>
+								<a class="dropdown-item me-4" href="index-2.html#">
+									<img class="fa-fw me-2" src="{% static 'assets/images/flags/uk.svg' %}" alt="">
+									English
+								</a>
+							</li>
+							<li> 
+								<a class="dropdown-item me-4" href="index-2.html#"><img class="fa-fw me-2" src="{% static 'assets/images/flags/sp.svg' %}" alt="">Español</a>
+							</li>
+							
 						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="btn btn-primary mt-1" href="#">Обратный звонок</a>
 					</li>
 				</ul>
 				<!-- Nav Main menu END -->
@@ -104,7 +101,7 @@
 				<div class="card card-body shadow p-4 p-sm-5 position-relative">
 
 					<!-- Form START -->
-					<h1 class="fs-2 mb-4">{% trans "Войдите в " %} Eduport!</h1>
+					<h1 class="fs-2 mb-4">Войдите в Eduport!</h1>
 
 					<!-- Form START -->
 					<form action="" method="post">
@@ -115,18 +112,18 @@
 						<div class="mb-4 d-flex justify-content-between mb-4">
 							<div class="form-check">
 								<input type="checkbox" class="form-check-input" id="exampleCheck1">
-								<label class="form-check-label" for="exampleCheck1">{% trans "Запомните меня" %} </label>
+								<label class="form-check-label" for="exampleCheck1">Запомните меня</label>
 							</div>
 							<div class="text-primary-hover">
 								<a href="{% url 'password_reset' %}" class="text-secondary">
-									<u>{% trans "Забыл пароль?" %} </u>
+									<u>Забыл пароль?</u>
 								</a>
 							</div>
 						</div>
 						<!-- Button -->
 						<div class="align-items-center mt-0">
 							<div class="d-grid">
-								<button class="btn btn-primary mb-0" type="submit">{% trans "Авторизоваться" %}</button>
+								<button class="btn btn-primary mb-0" type="submit">Авторизоваться</button>
 							</div>
 						</div>
 					</form>
@@ -137,7 +134,7 @@
 
 					<!-- Sign up link -->
 					<div class="mt-4 text-center">
-						<span>{% trans "У вас нет аккаунта? " %}<a href="{% url 'student_register' %}"> {% trans "Зарегистрироваться" %}</a></span>
+						<span>У вас нет аккаунта? <a href="sign-up.html"> Зарегистрироваться</a></span>
 					</div>
 					<!-- Form END -->
 				</div>

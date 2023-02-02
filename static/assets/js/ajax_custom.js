@@ -128,9 +128,3 @@ $(document).on('submit','#form-register-modal',function(){
         }
     });
 })
-
-
-$(document).on('change','.type-selected',function(){
-  $('#form-register-content').removeClass('d-none')
-  $('#file-content').removeClass('d-none')
-})
