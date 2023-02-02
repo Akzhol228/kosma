@@ -3,7 +3,7 @@
 	{% csrf_token %}
 	<div class="mb-3">
 		<label class="form-label">Введите номер телефона чтобы мы смогли с вами связвться</label>
-		{{ call_back_form.phone_number|add_class:"form-control"|append_attr:"placeholder:Введите номер телефона" }}
+		{{ call_back_form.phone_number|add_class:"form-control phone_mask"|append_attr:"placeholder:Введите номер телефона" }}
 	</div>
 	<div class="mb-3">
 		<label class="form-label">Введите вашу имю</label>

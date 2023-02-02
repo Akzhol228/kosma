@@ -43,6 +43,7 @@ $(document).on('click','.open-universal-modal',function(){
                 $modal.on('shown.bs.modal', function () {
                 }).modal('show');
                 subject_search()
+                $("#id_phone_number").mask("+7 (999) 999-99-99")
             }
         })
     }

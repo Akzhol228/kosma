@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,18 +60,24 @@
 						<a href="{% url 'main:MainView'%}" class="nav-link">Главная страница</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-globe me-2"></i> Язык</a>
+						<a class="nav-link dropdown-toggle" href="#" id="demoMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-globe me-2"></i>
+                            Язык
+                        </a>
+                        
+						{% get_current_language as LANGUAGE_CODE %}
+						{% get_available_languages as LANGUAGES %}
+						{% get_language_info_list for LANGUAGES as languages %}
+
 						<ul class="dropdown-menu" aria-labelledby="demoMenu">
-							<li>
-								<a class="dropdown-item me-4" href="index-2.html#">
-									<img class="fa-fw me-2" src="{% static 'assets/images/flags/uk.svg' %}" alt="">
-									English
-								</a>
-							</li>
-							<li> 
-								<a class="dropdown-item me-4" href="index-2.html#"><img class="fa-fw me-2" src="{% static 'assets/images/flags/sp.svg' %}" alt="">Español</a>
-							</li>
-							
+							{% for language in languages %}
+								<li>
+									<a class="dropdown-item me-4 {% if language.code == LANGUAGE_CODE %} selected{% endif %}"
+									   href="/{{ language.code }}{{ request.path|cut:'/kk'|cut:'/ru' }}">
+										{{ language.name_local }}
+									</a>
+								</li>
+							{% endfor %}
 						</ul>
 					</li>
 				</ul>
@@ -101,7 +109,7 @@
 		<div class="row g-4 g-sm-5 align-items-center">
 			<div class="col-lg-6">
 				<!-- Title -->
-				<h4 class="mb-4 mt-3">Что даёт студентам сайт «Всё сдал!»?</h4>
+				<h4 class="mb-4 mt-3">{% trans "Что даёт студентам сайт" %} «Всё сдал!»?</h4>
 				
 				<!-- List -->
 				<ul class="list-inline vstack gap-4 flex-wrap mb-4 mt-3">
@@ -111,8 +119,8 @@
 							<i class="fas fa-check"></i>
 						</div>
 						<div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
-							<h5 class="mb-0"> Быстрый поиск помощника</h5>
-							<p class="mb-0">За 59 секунд система разошлёт задание экспертам, а они предложат цены.</p>
+							<h5 class="mb-0"> {% trans "Быстрый поиск помощника" %}</h5>
+							<p class="mb-0">{% trans "За 59 секунд система разошлёт задание экспертам, а они предложат цены." %}</p>
 						</div>
 					</li>
 					<!-- Item -->
@@ -121,8 +129,8 @@
 							<i class="fas fa-check"></i>
 						</div>
 						<div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
-							<h5 class="mb-0"> Общение с экспертом напрямую</h5>
-							<p class="mb-0">Эксперты предлагают цены, а вы выбираете подходящего (по рейтингу, отзывам, стоимости).</p>
+							<h5 class="mb-0"> {% trans "Общение с экспертом напрямую" %}</h5>
+							<p class="mb-0">{% trans "Эксперты предлагают цены, а вы выбираете подходящего (по рейтингу, отзывам, стоимости)." %}</p>
 						</div>
 					</li>
 					<!-- Item -->
@@ -131,8 +139,8 @@
 							<i class="fas fa-check"></i>
 						</div>
 						<div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
-							<h5 class="mb-0">Цены в 2-3 раза ниже, чем у посредников</h5>
-							<p class="mb-0">Общаясь с экспертом напрямую, экономите не только время, но и деньги.</p>
+							<h5 class="mb-0">{% trans "Цены в 2-3 раза ниже, чем у посредников" %}</h5>
+							<p class="mb-0">{% trans "Общаясь с экспертом напрямую, экономите не только время, но и деньги." %}</p>
 						</div>
 					</li>
 
@@ -141,8 +149,8 @@
 							<i class="fas fa-check"></i>
 						</div>
 						<div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
-							<h5 class="mb-0">Строгий отбор экспертов</h5>
-							<p class="mb-0">Наши эксперты прошли проверку временем, сложностью и количеством заданий.</p>
+							<h5 class="mb-0">{% trans "Строгий отбор экспертов" %}</h5>
+							<p class="mb-0">{% trans "Наши эксперты прошли проверку временем, сложностью и количеством заданий." %}</p>
 						</div>
 					</li>
 
@@ -161,19 +169,19 @@
 
 					<!-- Form START -->
 					<form action="" method="post">
-						<h5 class="text-center">Зарегистрируйтесь сейчас
+						<h5 class="text-center">{% trans "Зарегистрируйтесь сейчас" %}
 						</h5>
-						<span class="d-block text-center mb-3">После регистрации вы получите доступ к сайту</span>
+						<span class="d-block text-center mb-3">{% trans "После регистрации вы получите доступ к сайту" %}</span>
 						{% csrf_token %}
 						{{ form|crispy }}
 						<input type="hidden" name="role" value="1">
 						<div class="align-items-center mt-0">
 							<div class="d-grid">
-								<button class="btn btn-primary mb-0" type="submit">Зарегистрировать </button>
+								<button class="btn btn-primary mb-0" type="submit">{% trans "Зарегистрировать" %} </button>
 							</div>
 						</div>
 						<div class="mt-4 text-center">
-							<span>У вас уже есть аккаунт? <a href="{% url 'accounts:login' %}"> Войти здесь</a></span>
+							<span>{% trans "У вас уже есть аккаунт?" %} <a href="{% url 'accounts:login' %}"> {% trans "Войти здесь" %}</a></span>
 						</div>
 					</form>
 					<!-- Form END -->

@@ -23228,7 +23228,17 @@ button, input, optgroup, select, textarea {
 
 .chat .chat-history {
     padding: 20px 12px;
-    border-bottom: 2px solid #fff
+    border-bottom: 2px solid #fff;
+    height: 60vh;
+    overflow-y: scroll;
+}
+.chat .chat-history::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #fff; /* or add it to the track */
+}
+.chat .chat-history::-webkit-scrollbar-thumb {
+  background: #ddd;
 }
 
 .chat .chat-history ul {
@@ -23304,7 +23314,11 @@ button, input, optgroup, select, textarea {
     background: #e8f1f3;
     text-align: right
 }
-
+.time_date{
+  display: block;
+  font-size: 12px;
+  margin-top: 5px;
+}
 .chat .chat-history .other-message:after {
     border-bottom-color: #e8f1f3;
     left: 72%
