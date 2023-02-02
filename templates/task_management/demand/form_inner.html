@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-<div class="col-md-12">
+<div class="col-md-12 type-selected">
 	{{ form.type_task|as_crispy_field }}
 </div>
 <div class="col-md-6">
@@ -13,7 +13,7 @@
 </div>
 
 <div class="formset">
-	<div class="formset-forms">
+	<div class="formset-forms d-none" id="file-content">
 		<div class="col-md-12 mb-1">
 		    <p class="form-label requiredField">
 		    	Файли(при наличии)<span class="asteriskField">*</span>
