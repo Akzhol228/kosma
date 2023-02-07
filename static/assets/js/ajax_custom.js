@@ -128,7 +128,3 @@ $(document).on('submit','#form-register-modal',function(){
         }
     });
 })
-
-$(document).on('change','.type-selected',function(){
-    alert('test....')
-}

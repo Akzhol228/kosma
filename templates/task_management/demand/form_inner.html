@@ -3,7 +3,11 @@
 	{{ form.type_task|as_crispy_field }}
 </div>
 <div class="col-md-6">
-	{{ form.subject|as_crispy_field }}
+	<label class="form-label requiredField">Предмет*</label>
+	<input list="subjects" class="form-control" name="subject">
+	<datalist id="subjects">
+	  <option value="">
+	</datalist>
 </div>
 <div class="col-md-6">
 	{{ form.deadline|as_crispy_field }}

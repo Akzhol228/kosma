@@ -1,15 +1,27 @@
 {% load widget_tweaks %}
+Тип вашего задания:
+{{demand_distributions.demand.type_task}}<br>
+Ваш предмет:
+{{demand_distributions.demand.subject}}<br>
+Дедлайн для этого заказа:
+{{demand_distributions.demand.deadline}}<br>
+Ваш заказ стоит:
+{{demand_distributions.price}}тг<br>
+Внесено предоплата:
+{{demand_distributions.prepayment}}тг<br>
+Ваш эксперт:
+{{demand_distributions.expert.first_name}} {{demand_distributions.expert.last_name}} <br>
+
 <form class="row g-4" action="{{ request.path }}" method="POST" id="form-universal-modal">
      {% csrf_token %}
     <div class="modal-body">
-        <p class="mb-0 color-red"> Вы точно хотите выбрать данного исполнителя?   </p>
-        <p class="mb-0 color-red"> Тогда оставьте ваш номер тут чтобы вы могли оплатить с Каспий </p>
+        <p class="mb-0 color-red"> Оставьте номер телефона. Наши мееджеры скоро с вами свяжеться</p>
         {{ form.phone_number|add_class:"form-control"|append_attr:"placeholder:Введите номер телефона" }}
         {{ form.status.as_hidden }}
         {{ form.is_expert_selected.as_hidden }}
     </div>
     <div class="modal-footer">
-        <input type="submit" class="btn btn-danger btn-sm" value="Да хочу">
+        <input type="submit" class="btn btn-danger btn-sm" value="Оставить">
         <a href="" class="btn btn-secondary btn-sm">Нет</a>
     </div>
 </form>

@@ -36,6 +36,8 @@
 											<i class="text-warning fa-fw bi bi-pencil-square  fa-fw me-2"></i>Редактировать
 										</a>
 									</li>
+									{% get_selected_demand_distribution query=demand status=2 as selected_demand_distribution %}
+									{% if selected_demand_distribution %}
 									<li> <hr class="dropdown-divider"></li>
 									<li>
 										<a class="dropdown-item open-universal-modal" target="_blank" data-modal-url="{% url 'student_dashboard:demand_delete' pk=demand.id %}" data-modal-title="Удалить заказ">
@@ -43,6 +45,7 @@
 											Удалить
 										</a>
 									</li>
+									{% endif %}
 									{% get_selected_demand_distribution query=demand status=3 as selected_demand_distribution %}
 									{% if selected_demand_distribution %}
 										<li> <hr class="dropdown-divider"></li>
@@ -84,15 +87,18 @@
 								<div class="d-flex justify-content-between align-items-center mt-1">
 								<div class="d-flex justify-content-between align-items-center mt-1">
 									<ul class="nav nav-divider small mb-0">
-										{% for demandfile in demand.demandfile_set.all %}
-										    <li class="nav-item">Прикрепленные файлы: </li>
-											<li>
-												
-											    <a href="{{ demandfile.file.url }}" download class="a-link me-2 mb-4 mb-sm-0">
-												    {{ demandfile.file }} ,
-											    </a>
-											</li>
-										{% endfor %}
+										{% get_selected_demand_distribution query=demand status=5 as selected_demand_distribution %}
+										{% if selected_demand_distribution %}
+											{% for demandfile in demand.demandfile_set.all %}
+											    <li class="nav-item">Прикрепленные файлы: </li>
+												<li>
+													
+												    <a href="{{ demandfile.file.url }}" download class="a-link me-2 mb-4 mb-sm-0">
+													    {{ demandfile.file }} ,
+												    </a>
+												</li>
+											{% endfor %}
+										{%endif%}
 									</ul>
 								</div>
 

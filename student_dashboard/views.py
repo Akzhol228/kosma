@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -13,6 +13,7 @@ from employment_portfolio.mixin_views import CommentMixin, CommentEditMixin, Cla
 from chat.mixin_views import MessageMixin
 from accounts.models import CustomUser
 from actions.mixin_views import ActionMixin, ActionContextMixin
+from django.contrib import messages
 
 
 # Миксн заказа
@@ -110,11 +111,12 @@ class ExpertChooseView(DemandDistributionMixin, UpdateView):
 
     def form_valid(self, form):
         redirect_url = super().form_valid(form)
-        pk = self.kwargs.get('pk')
-        demand_distribution = DemandDistribution.objects.get(pk=pk)
+        id = self.kwargs.get('pk')
+        demand_distribution = DemandDistribution.objects.get(id=id)
         demand_distribution.demand.is_expert_selected = True
         demand_distribution.demand.save()
         return redirect_url
+
 
 # Детальная информация о эксперте
 class ExpertDetailView(DemandDistributionMixin, ListView):
@@ -139,6 +141,7 @@ class CommentCreateView(CommentMixin, CommentEditMixin, CreateView):
             form_create.expert = expert
             form_create.student = self.request.user
             form_create.save()
+            messages.success(self.request, "Вы успешно оставили комментарий" )
             return redirect('student_dashboard:demand_list')
         return super().form_valid(form)
 
@@ -161,6 +164,7 @@ class ClaimCreateView(ClaimMixin, ClaimEditMixin, CreateView):
             form_create = claim_form.save(commit=False)
             form_create.expert = expert
             form_create.save()
+            messages.success(self.request, "Вы успешно оставили жалобу" )
             return redirect('student_dashboard:demand_list')
         return super().form_valid(form)
 

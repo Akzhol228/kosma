@@ -55,7 +55,8 @@ class DemandDistribution(models.Model):
         (1, 'Ожидание'),
         (2, 'Отклик'),
         (3, 'Ожидание оплаты'),
-        (4, 'Заказ принят')
+        (4, 'Заказ принят'),
+        (5, 'Заказ оплачено'),
     )
 
     expert = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
