@@ -166,6 +166,15 @@ class CompletedFileDeleteView(DeleteView):
     model = DemandCompletedFile
     success_url = reverse_lazy('expert_dashboard:my_task_list')
 
+class DemandDistributionDetailView(TemplateResponseMixin, View):
+    template_name = 'task_management/demand_distribution/detail.html'
+
+    def get(self, request):
+        pk = request.GET.get('id')
+        demand_distribution = DemandDistribution.objects.get(pk=pk)
+        return self.render_to_response({
+            'demand_distribution': demand_distribution})
+
 
 
 

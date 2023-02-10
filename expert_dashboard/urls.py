@@ -20,4 +20,5 @@ urlpatterns = [
          name='demand_distribution_delete'),
     path('demand_completed_file/create/<int:pk>', views.CompletedFileCreateView.as_view(), name='demand_completed_file_create'),
     path('demand_completed_file/delete/<int:pk>', views.CompletedFileDeleteView.as_view(), name='demand_completed_file_delete'),
+    path('demand/demand_distribution/detail', views.DemandDistributionDetailView.as_view(), name='demand_distribution_detail'),
 ]

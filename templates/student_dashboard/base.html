@@ -140,23 +140,27 @@
 								<i class="bi bi-bell fa-fw"></i>
 							</a>
 							<!-- Notification dote -->
+							<div id="red-animation">
 							<span class="notif-badge animation-blink {% if not actions %} d-none {% endif %}"></span>
+							</div>
 
 							<!-- Notification dropdown menu START -->
 							<div class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg border-0">
 								<div class="card bg-transparent">
-									<div class="card-header bg-transparent border-bottom py-4 d-flex justify-content-between align-items-center">
-										<h6 class="m-0">
+									<div class="card-header bg-transparent border-bottom py-4 d-flex justify-content-between align-items-center" >
+										<h6 class="m-0" id="notification-count">
 											Уведомления
 											<span class="badge bg-danger bg-opacity-10 text-danger ms-2
 												{% if not actions %} d-none {% endif %}">
 												{{ actions.count }} новый
 											</span>
 										</h6>
-										<a class="small {% if not actions %} d-none {% endif %}" href="#">Очистить все</a>
+										<div id="cleare-notification-button">
+											<a class="small {% if not actions %} d-none {% endif %} open-universal-modal" data-modal-url="{% url 'student_dashboard:action_delete' %}" data-modal-title="Удалить все уведомление" href="#">Очистить все</a>
+										</div>
 									</div>
 									<div class="card-body p-0">
-										<ul class="list-group list-unstyled list-group-flush">
+										<ul class="list-group list-unstyled list-group-flush" id="action-list">
 											<!-- Notif item -->
 											{% for action in actions %}
 												<li>
@@ -164,18 +168,13 @@
 														<div>
 															<p class="text-body small m-0">
 																{{ action.verb }}
-
-
 															</p>
-															{% if action.target_ct.name == 'demand distribution' %}
-																<u class="small">Открыть</u>
-															{% endif %}
 														</div>
 													</a>
 												</li>
 											{% empty %}
 												<li>
-													<a href="#" class="list-group-item-action border-0 border-bottom d-flex p-3">
+													<a href="#" class="list-group-item-action border-0 border-bottom d-flex p-3" id="not-notification">
 														<div>
 															<p class="text-body small m-0">Нет уведомления</p>
 														</div>

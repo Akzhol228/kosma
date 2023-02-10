@@ -6,6 +6,7 @@
 {% block content %}
 
 <div class="row">
+<<<<<<< Updated upstream
 	<div class="col-md-12">
 		{% if demands %}
 			{% for demand in demands %}
@@ -30,6 +31,54 @@
 									<i class="fas fa-ellipsis-h"></i>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-end min-w-auto" data-bs-popper="static">
+=======
+	<div class="col-md-12" id="demand-detail">
+		{% for demand in demands %}
+		    <div class="card border rounded-1 mb-2">
+				<div class="card-body">
+					<ul class="nav nav-tabs nav-tabs-line" role="tablist">
+						<li class="nav-item" role="presentation">
+							<a class="nav-link active" data-bs-toggle="tab" href="#tab-{{ demand.id }}"
+							   aria-selected="true" role="tab">Описание</a>
+						</li>
+						<li class="nav-item" role="presentation">
+							<a class="nav-link" href="#tab-distribution-{{ demand.id }}"
+							   aria-selected="false" role="tab" data-bs-toggle="tab" tabindex="-1" id="count-expert-{{ demand.id }}">
+								Консультанты
+								{% if demand.get_count_responsive_distributions %}
+									<span  class="badge text-bg-danger" >{{ demand.get_count_responsive_distributions }}</span>
+								{% endif %}
+							</a>
+						</li>
+						<li class="nav-item dropdown nav-item-dropdown-icon">
+							<a class="nav-link show" href="#" id="advanceMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								<i class="fas fa-ellipsis-h"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-end min-w-auto" data-bs-popper="static">
+								<li>
+									<a class="dropdown-item open-universal-modal" data-modal-url="{% url 'student_dashboard:demand_update' pk=demand.id %}" target="_blank"
+									data-modal-title="Редактировать">
+										<i class="text-warning fa-fw bi bi-pencil-square  fa-fw me-2"></i>Редактировать
+									</a>
+								</li>
+								<li> <hr class="dropdown-divider"></li>
+								<li>
+									<a class="dropdown-item open-universal-modal" target="_blank" data-modal-url="{% url 'student_dashboard:demand_delete' pk=demand.id %}" data-modal-title="Удалить заказ">
+										<i class="text-orange bi bi-trash fa-fw me-2"></i>
+										Удалить
+									</a>
+								</li>
+								{% get_selected_demand_distribution query=demand status=3 as selected_demand_distribution %}
+								{% if selected_demand_distribution %}
+									<li> <hr class="dropdown-divider"></li>
+									<li>
+										<a class="dropdown-item open-universal-modal" data-modal-url="{% url 'student_dashboard:comment_create' expert=selected_demand_distribution.expert.id %}" target="_blank"
+										data-modal-title="Оставить комментарий">
+											<i class="text-warning fa-fw bi bi-pencil-square  fa-fw me-2"></i>Оставить комментарий
+										</a>
+									</li>
+									<li> <hr class="dropdown-divider"></li>
+>>>>>>> Stashed changes
 									<li>
 										<a class="dropdown-item open-universal-modal" data-modal-url="{% url 'student_dashboard:demand_update' pk=demand.id %}" target="_blank"
 										data-modal-title="Редактировать">
@@ -149,6 +198,7 @@
 											</div>
 										</div>
 									</div>
+<<<<<<< Updated upstream
 								{% empty %}
 									<div class="p-4 text-center">
 										<img src="{% static 'assets/main/expectation.png' %}" width="35" class="mb-2">
@@ -156,6 +206,15 @@
 									</div>
 								{% endfor %}
 							</div>
+=======
+								</div>
+							{% empty %}
+								<div class="p-4 text-center" id="expert-not-exist">
+									<img src="{% static 'assets/main/expectation.png' %}" width="35" class="mb-2">
+									<h6>Консультанты видят ваше задание и в ближайшее время начнут предлагать свои цены.</h6>
+								</div>
+							{% endfor %}
+>>>>>>> Stashed changes
 						</div>
 					</div>
 			    </div>
@@ -182,23 +241,50 @@
 {% endblock %}
 
 {% block domready %}
-	const url = 'ws://' + window.location.host + '/ws/notification/room/'
+	const url = 'ws://' + window.location.host + '/ws/notification/room/' + '{{request.user.id}}/'
 	const chatSocket = new WebSocket(url)
 
 	chatSocket.onmessage = function(event) {
-		var output = ''
+	    output_count_expert = ''
 		const data = JSON.parse(event.data)
-		var demandDistributionId = data.demand_distribution_id
-		var notification_chat_id = '#notification-chat-' + demandDistributionId
-        var notification_chat = parseInt($(notification_chat_id).html())
-        if(notification_chat){
-            notification_chat += 1
-        }
-        else{
-            notification_chat = 1
-        }
-        $(notification_chat_id).html(notification_chat)
-	}
+		if(data.type == 'notification'){
+			var demand_id = data.demand
+			var demand_distribution = data.demand_distribution
+			var count_expert_ = data.count_expert
+			var url = "{% url 'student_dashboard:demand_detail' %}"
+			$.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    demand_id: demand_id,
+                    demand_distribution: demand_distribution
+                },
+                success: function(res) {
+                	var demand_id_ = '#tab-distribution-' + demand_id
+                	$(demand_id_).append(res)
+                	var count_expert = '#count-expert-' + demand_id
+                	output_count_expert += 'Консультанты <span class="badge text-bg-danger">' +  count_expert_ + '</span>'
+                	$(count_expert).html(output_count_expert)
+                	$('#expert-not-exist').addClass( "d-none" )
+                    
+                }
+            })
+		}
+
+		if(data.type == 'action_notification'){
+			notification_count = ''
+			notification_count += 'Уведомления <span class="badge bg-danger bg-opacity-10 text-danger ms-2">' + data.actions_count + ' новый' + '</span>'
+			$('#notification-count').html(notification_count)
+			action_output = ''
+			action_output += '<li>' + '<a href="#" class="list-group-item-action border-0 border-bottom d-flex p-3">' + 
+							'<div>' + '<p class="text-body small m-0">' + data.verb + '</p>' + '</div>' + '</a>' +'</li>'
+			cleare_notification_button = '<a class="small open-universal-modal" data-modal-url="{% url 'student_dashboard:action_delete' %}" data-modal-title="Удалить все уведомление" href="#">' + 'Очистить все</a>'
+			$('#action-list').append(action_output)
+			$('#cleare-notification-button').html(cleare_notification_button)
+			$('#red-animation').html('<span class="notif-badge animation-blink">' + '</span>')
+			$('#not-notification').addClass('d-none')
+		}
+		}
 
 	chatSocket.onclose = function(event) {
 		console.error('Chat socket closed unexpectedly')

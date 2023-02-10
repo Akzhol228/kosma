@@ -23,4 +23,6 @@ urlpatterns = [
     path('archive/<int:pk>', views.DemandArchiveView.as_view(), name='archive'),
     path('archive/list/', views.DemandArchiveListView.as_view(), name='archive_list'),
     path('finished/task/list/', views.FinishedTaskListView.as_view(), name='finished_task_list'),
+    path('demand/detail/', views.DemandDetailView.as_view(), name='demand_detail'),
+    path('action/delete/', views.ActionDeleleteView.as_view(), name='action_delete'),
 ]
