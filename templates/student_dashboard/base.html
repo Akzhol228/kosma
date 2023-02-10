@@ -27,6 +27,15 @@
 </head>
 
 <body>
+	{% if messages %}
+		{% for message in messages %}
+			<div class="alert mb-2 alert-primary alert-dismissible fade show mt-2 mb-0 rounded-3" role="alert">
+				<!-- Info -->
+				{{ message }} 
+				<button type="button" class="btn-close mt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		{% endfor %}
+{% endif %}
 <header class="navbar-light navbar-sticky">
 	<!-- Logo Nav START -->
 	<nav class="navbar navbar-expand-xl navbar-h-60">

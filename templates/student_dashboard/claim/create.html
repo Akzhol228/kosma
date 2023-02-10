@@ -4,8 +4,7 @@
 	{% csrf_token %}
 	<div class="col-md-12">
 		<label class="form-label">Напишите жалбу</label>
-
-        {{ form|add_class:"form-control" }}
+        {{ form.text|add_class:"form-control" }}
 	</div>
 	<div class="d-sm-flex justify-content-end">
 		<button type="submit" class="btn btn-primary mb-0">Отправить жалобу</button>
