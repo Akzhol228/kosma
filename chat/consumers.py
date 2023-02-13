@@ -24,23 +24,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # receive message from WebSocket
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        demand_distribution_id = text_data_json['demand_distribution_id']
+        _type = text_data_json['type']
         recipient_room = self.room_group_name
-        now = timezone.now()
         await self.channel_layer.group_send(
             recipient_room,
             {
-                'type': 'chat_message',
-                'message': message,
-                'user': self.user.username,
-                'datetime': now.isoformat(),
-                'demand_distribution_id': demand_distribution_id
+                'type': _type,
+                **text_data_json
             }
         )
 
     # receive message from room group
     async def chat_message(self, event):
+        now = timezone.now()
+        data = {
+            **event,
+            'datetime': now.isoformat()
+        }
         await self.send(text_data=json.dumps(event))
 
 
@@ -63,5 +63,9 @@ class NotificationConsumer(AsyncWebsocketConsumer):
 
     # receive message from room group
     async def notification(self, event):
+        await self.send(text_data=json.dumps(event))
+
+
+    async def action_notification(self, event):
         await self.send(text_data=json.dumps(event))
 

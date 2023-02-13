@@ -12,7 +12,7 @@
 			<form class="row g-4" action="" method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
 				{% include 'task_management/demand/form_inner.html' %}
-				<input type="submit" value="Сохранить" class="btn btn-primary">
+				<input type="submit" value="Сохранить" class="btn btn-primary" id="new-task-submit">
 			</form>
 		</div>
 	</div>

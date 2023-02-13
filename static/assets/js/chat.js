@@ -61,8 +61,12 @@ $(document).on('click','#chat-message-submit',function(){
             object_id: demandDistributionIdActive
         },
         success: function(data) {
+            alert('sadsadsdasds')
             $('#chat-message-input').val('').focus()
-            chatSocket.send(JSON.stringify({'message': text, 'demand_distribution_id': demandDistributionIdActive}))
+            chatSocket.send(JSON.stringify({
+                'message': text, 'demand_distribution_id': demandDistributionIdActive,
+                'type': 'chat_message'
+            }))
         }
     })
 })

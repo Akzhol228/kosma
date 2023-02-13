@@ -3,6 +3,7 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateResponseMixin, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from task_management.models import DemandDistribution, Demand
@@ -13,7 +14,11 @@ from employment_portfolio.mixin_views import CommentMixin, CommentEditMixin, Cla
 from chat.mixin_views import MessageMixin
 from accounts.models import CustomUser
 from actions.mixin_views import ActionMixin, ActionContextMixin
+<<<<<<< Updated upstream
 from django.contrib import messages
+=======
+from actions.models import Action
+>>>>>>> Stashed changes
 
 
 # Миксн заказа
@@ -53,7 +58,7 @@ class DemandListView(DemandMixin, ActionContextMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(student=self.request.user, is_archive=False)
+        return qs.filter(student=self.request.user, is_archive=False).order_by('-id')
 
 
 # Добавить заказ
@@ -201,3 +206,28 @@ class FinishedTaskListView(DemandDistributionMixin, ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.filter(status=4)
+
+class DemandDetailView(TemplateResponseMixin, View):
+    template_name = 'student_dashboard/demand/detail.html'
+
+    def get(self, request):
+        pk = request.GET.get('demand_id')
+        demand_distribution_id = request.GET.get('demand_distribution')
+        demand_distribution = DemandDistribution.objects.get(pk=demand_distribution_id)
+        demand = Demand.objects.get(pk=pk)
+        return self.render_to_response({
+            'demand': demand, 'demand_distribution': demand_distribution})
+
+
+class ActionDeleleteView(TemplateView ,View):
+    template_name = 'student_dashboard/action/delete.html'
+
+    def post(self, request):
+        Action.objects.filter(user=request.user).delete()
+        if 'create' in self.request.path:
+            return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:demand_create')})
+        if 'profile' in self.request.path:
+            return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:student_profile')})
+        else:
+            return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:demand_list')})
+        

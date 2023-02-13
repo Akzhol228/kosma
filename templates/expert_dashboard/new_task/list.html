@@ -11,6 +11,7 @@
 		</div>
 	{% endfor %}
 {% endif %}
+<div id="new-task-websocket"></div>
 {% if request.user.portfolio %}
 	{% if demand_distributions %}
 	<div class="card border rounded-1">
@@ -32,7 +33,7 @@
 			</div>
 			<!-- Search and select END -->
 
-			<div class="row">
+			<div class="row" id="demand-distribution-detail">
 				{% for demand_distribution in demand_distributions %}
 					<div class="col-md-12 mb-3">
 						<div class="card border rounded-1">
@@ -180,4 +181,44 @@
 {% endif %}
 
 
+{% endblock %}
+
+{% block domready %}
+	const url = 'ws://' + window.location.host + '/ws/notification/room/' + '{{request.user.id}}/'
+	const chatSocket = new WebSocket(url)
+
+	chatSocket.onmessage = function(event) {
+		var output = ''
+		const data = JSON.parse(event.data)
+		if(data.type == 'notification'){
+			var id = data.demand_distribution
+			var url = "{% url 'expert_dashboard:demand_distribution_detail' %}"
+			$.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(res) {
+                    $('#demand-distribution-detail').append(res)
+                }
+            })
+		}
+		else if(data.type == 'notification'){
+			var demandDistributionId = data.demand_distribution_id
+			var notification_chat_id = '#notification-chat-' + demandDistributionId
+	        var notification_chat = parseInt($(notification_chat_id).html())
+	        if(notification_chat){
+	            notification_chat += 1
+	        }
+	        else{
+	            notification_chat = 1
+	        }
+	        $(notification_chat_id).html(notification_chat)
+		}
+	}
+
+	chatSocket.onclose = function(event) {
+		console.error('Chat socket closed unexpectedly')
+	}
 {% endblock %}
