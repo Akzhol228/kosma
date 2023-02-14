@@ -5,7 +5,6 @@ from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import TemplateResponseMixin, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
 from task_management.models import DemandDistribution, Demand
 from task_management.mixin_views import DemandMixin, DemandEditMixin, DemandDistributionMixin
 from task_management.forms import DemandForm
@@ -14,11 +13,8 @@ from employment_portfolio.mixin_views import CommentMixin, CommentEditMixin, Cla
 from chat.mixin_views import MessageMixin
 from accounts.models import CustomUser
 from actions.mixin_views import ActionMixin, ActionContextMixin
-<<<<<<< Updated upstream
 from django.contrib import messages
-=======
 from actions.models import Action
->>>>>>> Stashed changes
 
 
 # Миксн заказа
