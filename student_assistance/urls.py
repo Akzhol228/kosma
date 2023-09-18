@@ -9,12 +9,12 @@ from accounts.views import LoginView, ExpertRegisterView, StudentRegisterView
 
 
 urlpatterns = i18n_patterns(
-    path('', include('main.urls', namespace='main')),
-    path('student/dashboard/', include('student_dashboard.urls', namespace='student_dashboard')),
+    path('main-main', include('main.urls', namespace='main')),
+    path('customer/dashboard/', include('student_dashboard.urls', namespace='student_dashboard')),
     path('task/management/', include('task_management.urls', namespace='task_management')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('expert/register/', ExpertRegisterView.as_view(), name='expert_register'),
-    path('student/register/', StudentRegisterView.as_view(), name='student_register'),
+    path('customer/register/', StudentRegisterView.as_view(), name='student_register'),
 )
 
 urlpatterns += [

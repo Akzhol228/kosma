@@ -64,9 +64,9 @@ class DemandDistribution(models.Model):
     date = models.DateField(auto_now_add=True)
     status = models.PositiveSmallIntegerField(
         choices=STATUS_TYPE_CHOICES, default=1)
-    price = models.DecimalField(max_digits=5, decimal_places=0, null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
     prepayment = models.DecimalField(max_digits=5, decimal_places=0, null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
-    phone_number = models.CharField(max_length=12, null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
     is_expert_selected = models.BooleanField(default=False)
 

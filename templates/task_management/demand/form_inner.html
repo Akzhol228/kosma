@@ -1,13 +1,18 @@
 {% load crispy_forms_tags %}
+{% load task_management_tags %}
 <div class="col-md-12 type-selected">
 	{{ form.type_task|as_crispy_field }}
 </div>
 <div class="col-md-6">
-	<label class="form-label requiredField">Предмет*</label>
-	<input list="subjects" class="form-control" name="subject">
-	<datalist id="subjects">
-	  <option value="">
-	</datalist>
+<!--	{{ form.subject|as_crispy_field }}-->
+	<label for="subject-input" class="form-label requiredField">Предмет*:</label>
+	{% get_subject_list as subjects %}
+	<select name="subject" id="subject-input" class="form-control">
+		<option>Пәнді таңдадыңыз</option>
+		{% for subject in subjects %}
+		<option value="{{subject}}">{{subject}}</option>
+		{% endfor %}
+  	</select>
 </div>
 <div class="col-md-6">
 	{{ form.deadline|as_crispy_field }}
@@ -17,12 +22,12 @@
 </div>
 
 <div class="formset">
-	<div class="formset-forms d-none" id="file-content">
+	<div class="file-content formset-forms d-none">
 		<div class="col-md-12 mb-1">
 		    <p class="form-label requiredField">
 		    	Файли(при наличии)<span class="asteriskField">*</span>
 		    </p>
-			<a class="btn btn-default border w-100 add-demand_file-formset float-right">+ Добавить файл</a>
+			<a class="btn btn-default border w-100 add-demand_file-formset">+ Добавить файл</a>
 		</div>
 		{{ demand_file_form_set }}
 		{% for formset_form in demand_file_form_set %}

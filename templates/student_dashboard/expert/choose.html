@@ -16,7 +16,7 @@
      {% csrf_token %}
     <div class="modal-body">
         <p class="mb-0 color-red"> Оставьте номер телефона. Наши мееджеры скоро с вами свяжеться</p>
-        {{ form.phone_number|add_class:"form-control"|append_attr:"placeholder:Введите номер телефона" }}
+        {{ form.phone_number|add_class:"form-control"|attr:"placeholder:+7 (___) ___-__-__"|attr:"id:id_phone_number" }}
         {{ form.status.as_hidden }}
         {{ form.is_expert_selected.as_hidden }}
     </div>

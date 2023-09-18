@@ -16,15 +16,15 @@
     <div class="col-md-8">
       <div class="card mb-3 border rounded-1">
         <div class="card-body">
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">ФИО</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              {{request.user.first_name}} {{request.user.last_name}}
-            </div>
-          </div>
-          <hr>
+<!--          <div class="row">-->
+<!--            <div class="col-sm-3">-->
+<!--              <h6 class="mb-0">ФИО</h6>-->
+<!--            </div>-->
+<!--            <div class="col-sm-9 text-secondary">-->
+<!--              {{request.user.first_name}} {{request.user.last_name}}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <hr>-->
           <div class="row">
             <div class="col-sm-3">
               <h6 class="mb-0">Эл. адрес</h6>
@@ -42,28 +42,19 @@
               {% if request.user.role == 2 %}
               Эксперт
               {% elif request.user.role == 1 %}
-              Студент
+              Заказчик
               {% endif %}
             </div>
           </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">Логин</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              {{request.user.username}}
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">Пароль</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              {{request.user.password}}
-            </div>
-          </div>
+<!--          <hr>-->
+<!--          <div class="row">-->
+<!--            <div class="col-sm-3">-->
+<!--              <h6 class="mb-0">Логин</h6>-->
+<!--            </div>-->
+<!--            <div class="col-sm-9 text-secondary">-->
+<!--              {{request.user.username}}-->
+<!--            </div>-->
+<!--          </div>-->
           
         </div>
       </div>

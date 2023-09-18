@@ -42,7 +42,6 @@ $(document).on('click','.open-universal-modal',function(){
                 $('#universal-modal-content').html(data)
                 $modal.on('shown.bs.modal', function () {
                 }).modal('show');
-                subject_search()
                 $("#id_phone_number").mask("+7 (999) 999-99-99")
             }
         })
@@ -71,7 +70,7 @@ $(document).on('submit','#form-universal-modal',function(){
           }
         },
         error: function (response) {
-            alert('error....')
+            alert('erroeer....')
         }
     });
 })
@@ -128,3 +127,24 @@ $(document).on('submit','#form-register-modal',function(){
         }
     });
 })
+
+$(document).on('click','#delete-one-message',function(){
+    var message_count_text = $('#messages-count').text()
+    var message_count_int = parseInt(message_count_text)
+    message_count_int = message_count_int - 1
+    var $link = $(this);
+    var url = $link.data('url')
+    var message_div = '#' + $link.data('message-div')
+    $.ajax({
+            url: url,
+            type: 'POST',
+            success: function(data) {
+                $(message_div).addClass('d-none')
+                $('#messages-count').html(message_count_int)
+            }
+        })
+});
+
+$(document).on('change','.type-selected',function(){
+    $('.file-content').removeClass('d-none')
+});

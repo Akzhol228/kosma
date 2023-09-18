@@ -15,15 +15,14 @@ chatSocket.onmessage = function(event) {
     const data = JSON.parse(event.data)
     var demandDistributionId = data.demand_distribution_id
     const dateOptions = {hour: 'numeric', minute: 'numeric', hour24: true};
-    const datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
-    const isMe = data.user === requestUser;
-    const source = isMe ? 'd-flex' : 'media-chat-reverse';
-    const name = isMe ? 'Me' : data.user;
+    const datetime = new Date().toLocaleString('en', dateOptions);
+    const isMe = data.user_from === requestUser;
+    const source = isMe ? 'float-right other-message' : 'my-message';
     var is_active = demandDistributionIdActive == demandDistributionId
     if(is_active){
-        output += '<div class="media media-chat ' + source + '">'
-        output += '<div class="media-body">'
-        output += '<p>' + data.message + '</p>'
+        output += '<li class="clearfix">' + '<div class="message ' + source + '">' +
+        '<p style="margin-bottom: -5px">' + data.message + '</p>' +
+        '<small style="display: block;font-size: 10px;color: silver;">' + datetime + '</small>' + '</div> ' + '</li>'
         $('#chat-content').append(output).animate({ scrollTop: 200000 }, "slow")
     }
     else{
@@ -61,11 +60,10 @@ $(document).on('click','#chat-message-submit',function(){
             object_id: demandDistributionIdActive
         },
         success: function(data) {
-            alert('sadsadsdasds')
             $('#chat-message-input').val('').focus()
             chatSocket.send(JSON.stringify({
                 'message': text, 'demand_distribution_id': demandDistributionIdActive,
-                'type': 'chat_message'
+                'type': 'chat_message', 'user_from': requestUser
             }))
         }
     })

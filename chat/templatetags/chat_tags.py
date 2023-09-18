@@ -1,6 +1,7 @@
 from django.db.models import Count
 from django import template
 from ..models import Message
+from task_management.models import DemandDistribution
 
 register = template.Library()
 
@@ -20,4 +21,9 @@ def get_count_unread_demand_message(user, objects):
 @register.simple_tag
 def get_merge_url(param1, param2):
     return str(param1) + '_' + str(param2)
+
+@register.simple_tag
+def get_username_expert(id):
+    demand_distribution = DemandDistribution.objects.get(pk=id)
+    return demand_distribution.expert.username
 

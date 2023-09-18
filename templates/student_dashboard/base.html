@@ -1,4 +1,4 @@
-
+{% load chat_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,23 +27,14 @@
 </head>
 
 <body>
-	{% if messages %}
-		{% for message in messages %}
-			<div class="alert mb-2 alert-primary alert-dismissible fade show mt-2 mb-0 rounded-3" role="alert">
-				<!-- Info -->
-				{{ message }} 
-				<button type="button" class="btn-close mt-1" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>
-		{% endfor %}
-{% endif %}
 <header class="navbar-light navbar-sticky">
 	<!-- Logo Nav START -->
 	<nav class="navbar navbar-expand-xl navbar-h-60">
 		<div class="container">
 			<!-- Logo START -->
 			<a class="navbar-brand navbar-brand-exspert" href="{% url 'main:MainView' %}">
-				<img class="light-mode-item navbar-brand-item" src="{% static 'assets/images/logo.svg' %}" alt="logo">
-				<img class="dark-mode-item navbar-brand-item" src="{% static 'assets/images/logo-light.svg' %}" alt="logo">
+				<img class="light-mode-item navbar-brand-item" src="{% static 'assets/images/iStudent.svg' %}" alt="logo">
+				<img class="dark-mode-item navbar-brand-item" src="{% static 'assets/images/iStudent.png' %}" alt="logo">
 			</a>
 			<!-- Logo END -->
 
@@ -71,62 +62,65 @@
 								<i class="bi bi-chat-dots fa-fw"></i>
 							</a>
 							<!-- badge -->
-							<span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-dark mt-xl-2 ms-n1">2 
-								<span class="visually-hidden">unread messages</span>
-							</span>
-
+							<div id="message-count-div">
+								<span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-dark mt-xl-2 ms-n1" id="messages-count">{{message_count}}</span>
+							</div>
 							<!-- Cart dropdown menu START -->
 							<div class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg border-0">
 								<div class="card bg-transparent">
 									<div class="card-header bg-transparent border-bottom py-4">
 										<h5 class="m-0"> Список сообщений</h5>
+										<a class="small {% if not messages_list %} d-none {% endif %} open-universal-modal"
+										   data-modal-url="{% url 'chat:message_delete' %}"
+										   data-modal-title="Удалить все уведомление" href="#">Очистить все
+										</a>
 									</div>
-									<div class="card-body p-0">
-
+									<div class="card-body p-0" id="chat-notification-list">
+									{% if messages_list %}
+									{% for message in messages_list %}
 										<!-- Cart item START -->
-										<div class="row p-3 g-2">
+										{% get_merge_url message.content_object.demand.id message.content_object.id as room %}
+										<a href="{% url 'student_dashboard:message_list' room=room %}">
+										<div class="row p-3 g-2" id="message-div-{{message.id}}">
 											<!-- Image -->
 
 											<div class="col-12">
 												<!-- Title -->
 												<div class="d-flex justify-content-between">
 													<div>
-														<h6 class="m-0">Елдос Өмірахын</h6>
-														<p>Hello i dun cats sdsd sdasd s...</p>
+														<h6 class="m-0">{{message.from_user}}</h6>
+														<p>{{message.text}}</p>
 													</div>
-													<a href="#" class="small text-primary-hover"><i class="bi bi-x-lg"></i></a>
+													<a href="#" class="small text-primary-hover" >
+														<i id="delete-one-message" class="bi bi-x-lg"
+														   data-url="{% url 'chat:message_delete' message.id %}"
+														data-message-div="message-div-{{message.id}}"></i>
+													</a>
 												</div>
 												
 											</div>
 										</div>
+										</a>
+									{% endfor %}
+									{% else %}
+										<div class="row p-3 g-2" id="no-message-div">
+											<!-- Image -->
+
+											<div class="col-12">
+												<!-- Title -->
+												<div class="d-flex justify-content-between">
+													<div>
+														<p>нет сообщений</p>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									{% endif %}
 										<!-- Cart item END -->
 
 										<!-- Divider -->
 										<hr class="m-0">
-
-										<!-- Cart item START -->
-										<div class="row p-3 g-2">
-											<!-- Image -->
-
-											<div class="col-12">
-												<!-- Title -->
-												<div class="d-flex justify-content-between">
-													<div>
-														<h6 class="m-0">Елдос Өмірахын</h6>
-														<p>Hello i dun cats sdsd sdasd s...</p>
-													</div>
-													<a href="#" class="small text-primary-hover"><i class="bi bi-x-lg"></i></a>
-												</div>
-												
-											</div>
-										</div>
-										<!-- Cart item END -->
-
-									</div>
-									<!-- Button -->
-									<div class="card-footer bg-transparent border-top py-3 text-center">
-										<a href="#" class="btn btn-sm btn-light mb-0">Посмотреть все </a>
-										
 									</div>
 								</div>
 							</div>
@@ -208,15 +202,15 @@
 										</div>
 										<div>
 											<a class="h6 mt-2 mt-sm-0" href="#">{{ request.user.username }}</a>
-											<p class="small m-0">{{ request.user.email }}</p>
+											<p class="small m-0"></p>
 										</div>
 									</div>
 								</li>
-                				<li> <hr class="dropdown-divider"></li>
+<!--                				<li> <hr class="dropdown-divider"></li>-->
 								<!-- Links -->
-								<li><a class="dropdown-item" href="#"><i class="bi bi-person fa-fw me-2"></i>Edit Profile</a></li>
+<!--								<li><a class="dropdown-item" href="#"><i class="bi bi-person fa-fw me-2"></i>Edit Profile</a></li>-->
 								<li><a class="dropdown-item bg-danger-soft-hover" href="{% url 'logout' %}"><i class="bi bi-power fa-fw me-2"></i>Выход</a></li>
-								<li> <hr class="dropdown-divider"></li>
+<!--								<li> <hr class="dropdown-divider"></li>-->
 							</ul>
 							<!-- Profile dropdown END -->
 						</li>
@@ -242,8 +236,7 @@
 				<div class="offcanvas-xl offcanvas-end" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
 					<!-- Offcanvas header -->
 					<div class="offcanvas-header bg-light">
-						<img class="light-mode-item navbar-brand-item" src="{% static 'assets/images/logo.svg' %}" alt="logo" width="150">
-						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
+						Freelancer.kz
 					</div>
 					<!-- Offcanvas body -->
 					<div class="offcanvas-body p-3 p-xl-0">
@@ -315,7 +308,6 @@
 <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 <!-- Vendors -->
 <script src="{% static 'assets/vendor/glightbox/js/glightbox.js' %}"></script>
-<script src="{% static 'assets/vendor/glightbox/js/glightbox.js' %}"></script>
 <script src="{% static 'assets/vendor/purecounterjs/dist/purecounter_vanilla.js' %}"></script>
 <!-- Template Functions -->
 <script src="{% static 'assets/js/functions.js' %}"></script>
@@ -326,6 +318,9 @@
 <script src="{% static 'assets/js/js.cookie.min.js' %}"></script>
 <script src="{% static 'assets/js/ajax_custom.js' %}"></script>
 <script src="{% static 'assets/js/chat.js' %}"></script>
+<script src="{% static 'assets/js/form_set.js' %}"></script>
+<script src="{% static 'assets/js/selectize.js' %}"></script>
+<script src="{% static 'assets/vendor/mask-js/jquery.maskedinput.min.js' %}"></script>
 <script type="text/javascript">
 	var csrftoken = Cookies.get('csrftoken');
 	function csrfSafeMethod(method) {
@@ -340,7 +335,70 @@
 	});
 
 	$(document).ready(function() {
+		const url = 'ws://' + window.location.host + '/ws/notification/room/' + '{{request.user.id}}/'
+		const chatSocket = new WebSocket(url)
+
+		chatSocket.onmessage = function(event) {
+		    output_count_expert = ''
+			const data = JSON.parse(event.data)
+			if(data.type == 'notification'){
+				var demand_id = data.demand
+				var demand_distribution = data.demand_distribution
+				var count_expert_ = data.count_expert
+				var url = "{% url 'student_dashboard:demand_detail' %}"
+				$.ajax({
+    	            url: url,
+    	            type: 'GET',
+    	            data: {
+    	                demand_id: demand_id,
+    	                demand_distribution: demand_distribution
+    	            },
+    	            success: function(res) {
+    	            	var demand_id_ = '#tab-distribution-' + demand_id
+    	            	$(demand_id_).append(res)
+    	            	var count_expert = '#count-expert-' + demand_id
+    	            	output_count_expert += 'Консультанты <span class="badge text-bg-danger">' +  count_expert_ + '</span>'
+    	            	$(count_expert).html(output_count_expert)
+    	            	$('#expert-not-exist').addClass( "d-none" )
+
+    	            }
+    	        })
+			}
+
+		if(data.type == 'action_notification'){
+			notification_count = ''
+			notification_count += 'Уведомления <span class="badge bg-danger bg-opacity-10 text-danger ms-2">' + data.actions_count + ' новый' + '</span>'
+			$('#notification-count').html(notification_count)
+			action_output = ''
+			action_output += '<li>' + '<a href="#" class="list-group-item-action border-0 border-bottom d-flex p-3">' +
+							'<div>' + '<p class="text-body small m-0">' + data.verb + '</p>' + '</div>' + '</a>' +'</li>'
+			cleare_notification_button = '<a class="small open-universal-modal" data-modal-url="{% url 'student_dashboard:action_delete' %}" data-modal-title="Удалить все уведомление" href="#">' + 'Очистить все</a>'
+			$('#action-list').append(action_output)
+			$('#cleare-notification-button').html(cleare_notification_button)
+			$('#red-animation').html('<span class="notif-badge animation-blink">' + '</span>')
+			$('#not-notification').addClass('d-none')
+			}
+		if(data.type == 'chat_notification'){
+			action_output = ''
+			var message_url = data.demand_id + '_' + data.demand_distribution_id
+			action_output += '<a href="/student/dashboard/' + message_url + '/message/list">' + '<div class="row p-3 g-2">' + '<div class="col-12">' +
+	                         '<div class="d-flex justify-content-between">' + '<div>' +
+		                     '<h6 class="m-0">' + data.user_from + '</h6>' + '<p>' +
+			                 data.text + '</p>' + '</div>' + '<a href="#" class="small text-primary-hover" >жаңа' + '</a>' + '</div>' + '</div>' + '</div>' + '</a>'
+            message_count = ''
+			message_count += '<span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-dark mt-xl-2 ms-n1">' + data.message_count +
+							 '<span class="visually-hidden">' + 'unread messages' + '</span>' + '</span>'
+			$('#chat-notification-list').prepend(action_output)
+			$('#message-count-div').append(message_count)
+			$('#no-message-div').addClass('d-none')
+			}
+		}
+
+		chatSocket.onclose = function(event) {
+			console.error('Chat socket closed unexpectedly')
+		}
 		{% block domready %}{% endblock %}
 	})
+
 </script>
 </html>

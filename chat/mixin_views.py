@@ -1,6 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 from .models import Message
-
+from django.shortcuts import get_object_or_404
+from task_management.models import Demand, DemandDistribution
 
 class MessageMixin:
     model = Message
@@ -26,4 +27,6 @@ class MessageMixin:
         context = super().get_context_data(**kwargs)
         context['room_split_0'] = self.room_split_0
         context['room_split_1'] = self.room_split_1
+        context['demand'] = get_object_or_404(Demand, pk=self.room_split_0)
+        context['demand_distrubutions'] = DemandDistribution.objects.filter(demand=context['demand'], status=2)
         return context

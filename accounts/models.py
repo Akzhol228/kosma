@@ -12,7 +12,7 @@ USERTYPE_DEFAULT = USERTYPE_STUDENT
 class CustomUser(AbstractUser):
     """Расширенная пользовательская модель"""
     USER_ROLE_CHOICES = (
-        (USERTYPE_STUDENT, 'student'),
+        (USERTYPE_STUDENT, 'customer'),
         (USERTYPE_EXPERT, 'expert'),
         (USERTYPE_ADMIN, 'admin'),
     )

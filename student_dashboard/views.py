@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import TemplateResponseMixin, View
@@ -15,6 +16,8 @@ from accounts.models import CustomUser
 from actions.mixin_views import ActionMixin, ActionContextMixin
 from django.contrib import messages
 from actions.models import Action
+from chat.models import Message
+
 
 
 # Миксн заказа
@@ -56,6 +59,10 @@ class DemandListView(DemandMixin, ActionContextMixin, ListView):
         qs = super().get_queryset()
         return qs.filter(student=self.request.user, is_archive=False).order_by('-id')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
 
 # Добавить заказ
 class DemandCreateView(DemandMixin, DemandEditMixin, CreateView):
@@ -90,6 +97,23 @@ class DemandDistributionDeleteView(DemandDistributionMixin, DeleteView):
 class StudentProfileView(TemplateView):
     template_name = 'student_dashboard/profile/list.html'
 
+    def get(self, request):
+        demand_distributions = DemandDistribution.objects.filter(
+            demand__student=self.request.user).values_list('id')
+        content_type = ContentType.objects.get(model='demanddistribution')
+        message_count = Message.objects.filter(
+            content_type=content_type,
+            object_id__in=demand_distributions,
+            is_read=False).exclude(from_user=self.request.user).count()
+        messages_list = Message.objects.filter(
+            content_type=content_type,
+            object_id__in=demand_distributions,
+            is_read=False).exclude(from_user=self.request.user).order_by('-id')[:5]
+        actions = Action.objects.filter(
+            user=self.request.user.id).all()
+        return self.render_to_response({
+            'message_count': message_count, 'messages_list': messages_list, 'actions': actions})
+
 
 # Профиль студента
 class StudentProfileEditView(TemplateView):
@@ -116,7 +140,11 @@ class ExpertChooseView(DemandDistributionMixin, UpdateView):
         demand_distribution = DemandDistribution.objects.get(id=id)
         demand_distribution.demand.is_expert_selected = True
         demand_distribution.demand.save()
-        return redirect_url
+        demand_distributions = DemandDistribution.objects.filter(demand=demand_distribution.demand).exclude(id=demand_distribution.id)
+        for demand_distribution in demand_distributions:
+            demand_distribution.is_expert_selected = False
+            demand_distribution.save()
+        return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:demand_list')})
 
 
 # Детальная информация о эксперте
@@ -175,6 +203,23 @@ class MessageListView(MessageMixin, ListView):
     template_name = 'student_dashboard/chat/message/list.html'
     content_type_model = DemandDistribution
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        demand_distributions = DemandDistribution.objects.filter(
+            demand__student=self.request.user).values_list('id')
+        content_type = ContentType.objects.get(model='demanddistribution')
+        context['message_count'] = Message.objects.filter(
+            content_type=content_type,
+            object_id__in=demand_distributions,
+            is_read=False).exclude(from_user=self.request.user).count()
+        context['messages_list'] = Message.objects.filter(
+            content_type=content_type,
+            object_id__in=demand_distributions,
+            is_read=False).exclude(from_user=self.request.user).order_by('-id')
+        context['actions'] = Action.objects.filter(
+            user=self.request.user.id).all()
+        return context
+
 
 # Страница архива
 class DemandArchiveView(DemandMixin, UpdateView):
@@ -208,11 +253,14 @@ class DemandDetailView(TemplateResponseMixin, View):
 
     def get(self, request):
         pk = request.GET.get('demand_id')
-        demand_distribution_id = request.GET.get('demand_distribution')
-        demand_distribution = DemandDistribution.objects.get(pk=demand_distribution_id)
-        demand = Demand.objects.get(pk=pk)
-        return self.render_to_response({
-            'demand': demand, 'demand_distribution': demand_distribution})
+        if pk:
+            demand_distribution_id = request.GET.get('demand_distribution')
+            demand_distribution = DemandDistribution.objects.get(pk=demand_distribution_id)
+            demand = Demand.objects.get(pk=pk)
+            return self.render_to_response({
+                'demand': demand, 'demand_distribution': demand_distribution})
+        return self.render_to_response({''})
+
 
 
 class ActionDeleleteView(TemplateView ,View):
@@ -226,4 +274,3 @@ class ActionDeleleteView(TemplateView ,View):
             return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:student_profile')})
         else:
             return JsonResponse({'success': True, 'redirect_url': reverse('student_dashboard:demand_list')})
-        

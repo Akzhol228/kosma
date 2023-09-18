@@ -21,7 +21,8 @@ def create_message(sender, instance, created, **kwargs):
         'id': instance.id,
         'type': 'notification',
         'demand_distribution_id': content_object.id,
-        'demand_id': content_object.demand.id
+        'demand_id': content_object.demand.id,
+        'from_user': user.email
     }
     group_manager = 'notification_%s' % user.id
     async_to_sync(channel_layer.group_send)(

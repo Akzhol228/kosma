@@ -1,4 +1,7 @@
 from django.forms.models import inlineformset_factory
+from django.contrib.contenttypes.models import ContentType
+from chat.models import Message
+from actions.models import Action
 from .models import Demand, DemandDistribution, DemandFile, DemandCompletedFile
 from .forms import DemandForm, DemandDistributionForm, DemandFileForm, DemandCompletedFileForm
 
@@ -23,6 +26,25 @@ class DemandMixin:
         for demand_file in demand_files:
             demand_file.demand = instance
             demand_file.save()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['demand_file_form_set'] = self.get_demand_file_formset()
+        if self.request.user.is_active:
+            demand_distributions = DemandDistribution.objects.filter(
+                demand__student=self.request.user).values_list('id')
+            content_type = ContentType.objects.get(model='demanddistribution')
+            context['message_count'] = Message.objects.filter(
+                content_type=content_type,
+                object_id__in=demand_distributions,
+                is_read=False).exclude(from_user=self.request.user).count()
+            context['messages_list'] = Message.objects.filter(
+                content_type=content_type,
+                object_id__in=demand_distributions,
+                is_read=False).exclude(from_user=self.request.user).order_by('-id')[:5]
+            context['actions'] = Action.objects.filter(
+                user=self.request.user.id).all()
+        return context
 
 
     @staticmethod
